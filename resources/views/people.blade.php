@@ -508,7 +508,7 @@
                                     
 
                                         <!--<a href="{{ url('record/'.$person->id.'/edit') }}">-->
-                                        <!--<i class="fa-regular fa-clipboard text-green-500" style="font-size: 2em; padding: 0 5px;"></i>-->
+                                      
 <!-- Display an icon -->
       
                       <!--<a href="{{ route('people.edit', ['id' => $person->id]) }}">-->
