@@ -13,10 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('people', function (Blueprint $table) {
-         $table->string('filename')->nullable();
-        $table->string('path')->nullable();
-        });
+        if (!Schema::hasColumn('people', 'filename')) {
+            Schema::table('people', function (Blueprint $table) {
+                $table->string('filename')->nullable();
+                $table->string('path')->nullable();
+            });
     }
 
     /**
