@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
 {
-    Schema::rename('temperatures', 'temperature');
+    // Schema::rename('temperatures', 'temperature');
 }
 
     /**
@@ -23,8 +23,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('temperatures', function (Blueprint $table) {
-            //
-        });
+        // Schema::table('temperatures', function (Blueprint $table) {
+        //     //
+        // });
     }
 };
