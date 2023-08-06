@@ -37,7 +37,7 @@ class TemperatureController extends Controller
    public function create(Request $request)
 {
     $person = Temperature::findOrFail($request->people_id);
-return redirect()->route('temperature.edit', ['people_id' => $person->id]);
+    return redirect()->route('temperature.edit', ['people_id' => $person->id]);
 }
 
     /**
@@ -48,26 +48,53 @@ return redirect()->route('temperature.edit', ['people_id' => $person->id]);
      */
     public function store(Request $request)
     {
-//         $temperature = new Temperature;
-// $temperature->value = $storeData['value'];
-// $temperature->date = $storeData['date'];
-// $temperature->people_id = $storeData['people_id'];
-// $temperature->save();
 
-         $storeData = $request->validate([
-            'temperature' => 'required|max:255',
-            // 'people_id' => 'required|exists:people,id',
-        ]);
-        // バリデーションした内容を保存する↓
-        
+
+        $storeData = $request->validate([
+        'temperature' => 'required|max:255',
+    ]);
+
         $temperature = Temperature::create([
         'temperature' => $request->temperature,
-    'people_id' => $request->people_id,
-         
+        'people_id' => $request->people_id,
     ]);
-    // return redirect('people/{id}/edit');
-   $person = Person::findOrFail($request->people_id);
-    return redirect()->route('temperature.edit', ['people_id' => $person->id]);
+
+    // return redirect()->route('temperatures.show', $temperature->id);
+    // $people 変数を取得
+    $people = Person::all();
+
+    // ビューにデータを渡す
+    return view('people', compact('temperature', 'people'));
+        // return view('people', compact('temperature'));
+        // フォームの値を受け取る
+        // $temperatureValue = $request->input('temperature');
+
+        // // ユーザーを特定する方法に応じて、ユーザーのインスタンスを取得する
+        // $person = Auth::user(); // 例: ログインしているユーザーを取得する
+
+        // // ユーザーと体温の関連付けを利用して、体温データを登録する
+        // $temperature = new Temperature;
+        // $temperature->person_id = $person->id; // ユーザーのIDを設定
+        // $temperature->temperature = $temperatureValue;
+        // $temperature->save();
+
+        // 登録完了後のリダイレクト先などの処理を記述
+
+    // 画面遷移コード↓
+//          $storeData = $request->validate([
+//             'temperature' => 'required|max:255',
+//             // 'people_id' => 'required|exists:people,id',
+//         ]);
+//         // バリデーションした内容を保存する↓
+        
+//         $temperature = Temperature::create([
+//         'temperature' => $request->temperature,
+//     'people_id' => $request->people_id,
+         
+//     ]);
+//     // return redirect('people/{id}/edit');
+//   $person = Person::findOrFail($request->people_id);
+//     return redirect()->route('temperature.edit', ['people_id' => $person->id]);
     }
 
     /**
@@ -76,17 +103,21 @@ return redirect()->route('temperature.edit', ['people_id' => $person->id]);
      * @param  \App\Models\temperature  $temperature
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($people_id)
 {
     
-    $person = Person::findOrFail($id);
-    $temperatures = $person->temperatures;
+    // $person = Person::findOrFail($id);
+    // $temperature = $person->temperature;
 
-    return view('people', compact('temperatures'));
+    // return view('people', compact('temperature', 'person'));
+    $person = Person::findOrFail($people_id);
+    // $temperature = $person->temperatures()->latest()->first();
+    $temperature = $person->temperatures;
+
+    // return view('people', compact('temperature', 'person'));
     
-    // $temperature = Temperature::findOrFail($id);
-
-    // return view('temperaturelist', compact('temperature'));
+    // return redirect()->route('temperatures.show', ['temperature','people_id' => $person->id]);
+    return view('people',compact('temperature'));
 }
 
     /**

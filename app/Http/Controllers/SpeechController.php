@@ -54,16 +54,18 @@ class SpeechController extends Controller
         // バリデーションした内容を保存する↓
         
         $speech = Speech::create([
+        // 'people_id' => $person->id,
         'people_id' => $request->people_id,
         'activity' => $request->activity,
         
          
     ]);
     // return redirect('people/{id}/edit');
-   $person = Person::findOrFail($request->people_id);
+//   $person = Person::findOrFail($request->people_id);
+   $people = Person::all();
     // return redirect()->route('speech.edit', ['people_id' => $person->id]);
-    return view('people', ['people' => Person::all()]);
-    
+    // return view('people', ['people' => Person::all()]);
+    return view('people', compact('speech', 'people'));
     }
 
     /**

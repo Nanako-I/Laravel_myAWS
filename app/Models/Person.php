@@ -14,6 +14,7 @@ class Person extends Model
     public function temperatures()
     {
         return $this->hasMany(Temperature::class,'people_id');
+        //  return $this->hasMany(Temperature::class);
     }
 
 public function foods()

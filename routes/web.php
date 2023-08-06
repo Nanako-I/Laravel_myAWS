@@ -66,7 +66,7 @@ Route::middleware('auth')->group(function () {
 // Route::resource('temperature', TemperatureController::class)->parameters(['temperature' => 'temperature'])->except(['show']);
 // Route::get('temperaturelist', [PersonController::class, 'templist']);
 // Route::get('people', [TemperatureController::class, 'show'])->name('temperature.show');
-Route::get('temperatures/{id}', 'TemperatureController@show')->name('temperatures.show');
+// Route::get('temperatures/{id}', 'TemperatureController@show')->name('temperatures.show');
 
 Route::get('temperaturelist', [PersonController::class, 'showtemperature'])->name('temperaturelist.edit');
 
@@ -74,7 +74,13 @@ Route::get('temperature/{people_id}/edit', [TemperatureController::class, 'edit'
 // Route::resource('temperature/{people_id}/edit', [TemperatureController::class])->name('temperature.edit');
 // Route::resource('temperature/{people_id}/edit', TemperatureController::class);
 
-Route::post('temperature/{people_id}/edit', [TemperatureController::class,'store'])->name('temperature.post');
+// Route::post('temperature/{people_id}/edit', [TemperatureController::class,'store'])->name('temperature.post');
+
+// プルダウンで登録させるバージョン↓
+Route::post('temperatures/{people_id}', [TemperatureController::class, 'store'])->name('temperatures.store');
+Route::get('temperatures/{people_id}', [TemperatureController::class, 'show'])->name('temperatures.show');
+// Route::get('temperatures/{people_id}', [PersonController::class, 'index'])->name('temperatures.show');
+Route::get('temperature/{people_id}/edit', [TemperatureController::class, 'edit'])->name('temperature.edit');
 
 Route::get('foods/{id}', 'FoodController@show')->name('foods.show');
 // Route::get('foods/{id}', 'FoodController@showAmountFood')->name('foods.show');
@@ -89,13 +95,17 @@ Route::get('toilet/{people_id}/edit', [ToiletController::class, 'edit'])->name('
 Route::post('toilet/{people_id}/edit', [ToiletController::class,'store'])->name('toilet.post');
 // Route::get('people/{id}/edit', [TemperatureController::class, 'index'])->name('temperatures.index');
 
-Route::get('speeches/{id}', 'SpeechController@show')->name('speeches.show');
-Route::get('speech/{people_id}/edit', [SpeechController::class, 'edit'])->name('speech.edit');
+// Route::get('speeches/{id}', 'SpeechController@show')->name('speeches.show');
+// Route::get('speech/{people_id}/edit', [SpeechController::class, 'edit'])->name('speech.edit');
 Route::post('speech/{people_id}/edit', [SpeechController::class,'store'])->name('speech.post');
 
+// プルダウンで登録させるバージョン↓
+Route::post('speeches/{people_id}', [SpeechController::class,'store'])->name('speech.store');
+// Route::post('/speech', 'SpeechController@store')->name('speech.store');
+Route::get('speeches/{people_id}', [SpeechController::class,'show'])->name('speech.show');
+Route::get('/speech/{id}/edit', 'SpeechController@edit')->name('speech.edit');
+
 Route::get('record/{id}/edit', [RecordController::class, 'show'])->name('record.edit');
-
-
 Route::get('people/{id}/edit', [PersonController::class, 'edit'])->name('people.edit');
 
 

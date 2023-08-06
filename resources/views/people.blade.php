@@ -22,30 +22,6 @@
         @endif
         <!-- バリデーションエラーの表示に使用-->
     
-    <!--全エリア[START]-->
-    
-    <!--<div class="flex bg-gray-100">-->
-
-        <!--左エリア[START]--> 
-        <!--<div class="text-gray-700 text-left px-4 py-4 m-2">-->
-            
-            
-
-
-            <!-- 本のタイトル -->
-            
-    <!--    
-       
-        <!--左エリア[END]--> 
-        
-    
-    
-    <!--右側エリア[START]-->
-   <!-- <div class="flex-1 text-gray-700 text-left bg-blue-100 px-4 py-2 m-2">-->
-        
-　　　<!--<section class="text-gray-600 body-font" _msthidden="18">-->
-   <!-- 　   　<div class="container px-5 py-24 mx-auto" _msthidden="18">-->
-　　　<!--　　　<div class="flex flex-wrap -m-4" _msthidden="18">-->
 <body>
 <style>
   /* フォントを指定 */
@@ -367,27 +343,36 @@
                                         <i class="fa-solid fa-thermometer text-pink-600" style="font-size: 2em; padding: 0 5px; transition: transform 0.2s;"></i>
                                         <p class="text-pink-600 font-bold text-xl ml-2">体温</p>
                                     </div>
-                                  <div class="flex items-center justify-center p-4">
-                                   
-                                            @if (!is_null($person) && count($person->temperatures) > 0)
-                                            @php
-                                              $lastTemperature = $person->temperatures->last();
-                                            @endphp
-                                        
-                                            @if ($lastTemperature->created_at->diffInHours(now()) >= 6)
-                                                <p class="text-red-500 font-bold text-xl">検温してください</p>
-                                            @else
-                                                <a href="{{ route('temperatures.show', $lastTemperature->id) }}" class="font-bold text-xl">{{ $lastTemperature->temperature }}℃</a>
-                                            @endif
-                                        
-                                    @endif
                                     
-                                        <a href="{{ url('temperature/'.$person->id.'/edit') }}">
-                                        <!--<i class="fa-solid fa-thermometer text-pink-400 hover:text-pink-400" style="font-size: 2em; padding: 0 5px;"></i>-->
-                                          @csrf
-                                        <i class="material-icons md-90 ml-auto">add</i>
-                                  </div>
+                                    <!-- people.blade.php -->
+                                   <div class="flex items-center justify-center p-4">
+    @if (!is_null($person) && count($person->temperatures) > 0)
+    @php
+       $lastTemperature = $person->temperatures->last();
+    @endphp
+        @if ($lastTemperature->created_at->diffInHours(now()) >= 6)
+            <!-- 検温フォーム -->
+            
+                <details>
+                    <summary class="text-red-500 font-bold text-xl">検温してください</summary>
+                    <form action="{{ route('temperatures.store', $person->id) }}" method="POST">
+                @csrf
+                    <input type="hidden" name="people_id" value="{{ $person->id }}">
+                    <input name="temperature" id="text-box" class="appearance-none block w-1/4 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white font-bold" type="text" placeholder="">
+                    <button type="submit" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150">
+                        送信
+                    </button>
+                </details>
+            </form>
+        @else
+            <!-- 直近の検温結果表示 -->
+            <a href="{{ route('temperatures.show', $lastTemperature->id) }}" class="font-bold text-xl">{{ $lastTemperature->temperature }}℃</a>
+        @endif
+    @endif
+</div>
                                 </div>
+
+                                
                                        
                                         <!-- トイレ登録↓ -->
                         　    　 　  <div class="border-2 p-2 rounded-lg bg-white m-2">
@@ -439,8 +424,8 @@
                                             @endif
                                           @endif
 
-                                        <a href="{{ url('toilet/'.$person->id.'/edit') }}">
-                                        <!--<i class="fa-solid fa-toilet-paper text-blue-500 hover:text-blue-500" style="font-size: 2em; padding: 0 5px;"></i>-->
+                                        <a href="{{ url('toilet/'.$person->id.'/edit') }}"></a>
+                                       
                                           @csrf
                                         <i class="material-icons md-90 ml-auto">add</i>
                                     </div>
@@ -461,29 +446,67 @@
                                                     $lastSpeechDate = \Carbon\Carbon::parse($lastSpeech->created_at)->toDateString();
                                                     $today = \Carbon\Carbon::now()->toDateString();
                                                 @endphp
-                                                @if ($lastSpeechDate === $today)
-                                                    <p class="font-bold text-xl p-2">済</p>
-                                                    <a href="{{ url('speech/'.$person->id.'/edit') }}">
-                                                        <!--<i class="fa-solid fa-volume-high text-orange-400" style="font-size: 2em; padding: 0 5px;"></i>-->
-                                                        @csrf
-                                                        <i class="material-icons md-90 ml-auto">add</i>
-                                                    </a>
-                                                    <!--<a href="{{ route('speeches.show', $lastSpeech->id) }}" class="font-bold text-xl">{{ $lastSpeech->activity }}</a>-->
-                                                @else
-                                                    <p class="text-red-500 font-bold text-xl">登録してください</p>
-                                                    <a href="{{ url('speech/'.$person->id.'/edit') }}">
-                                                        <!--<i class="fa-solid fa-volume-high text-orange-400" style="font-size: 2em; padding: 0 5px;"></i>-->
-                                                        @csrf
-                                                        <i class="material-icons md-90 ml-auto">add</i>
-                                                    </a>
-                                                @endif
+                                                
+
+                                            @if ($lastSpeechDate === $today)
+                                          　
+                                                <!-- 登録済みの場合 -->
+                                                <p class="font-bold text-xl p-2">済</p>
+                                                <a href="{{ route('speech.show', $lastSpeech->id) }}" class="text-gray-900 font-bold text-xl">{{ $lastSpeech->activity }}</a>
                                             @else
-                                                <p class="text-red-500 font-bold text-xl">登録してください</p>
-                                                <a href="{{ url('speech/'.$person->id.'/edit') }}">
-                                                    <!--<i class="fa-solid fa-volume-high text-orange-400" style="font-size: 2em; padding: 0 5px;"></i>-->
-                                                    @csrf
-                                                    <i class="material-icons md-90 ml-auto">add</i>
-                                                </a>
+                                                <!-- 登録していない場合 -->
+                                                <details>
+                                                <summary class="text-red-500 font-bold text-xl">登録してください</summary>
+                                            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+                                                  <script src="https://kit.fontawesome.com/de653d534a.js" crossorigin="anonymous"></script>
+                                                    <i class="fa-solid fa-volume-high text-orange-400" style="font-size: 3em; padding: 0 5px;"></i>
+                                             
+                                                    <button id="start-btn" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-lg text-lg">
+                                                      スタート
+                                                    </button>
+                                            
+                                                    <button id="stop-btn" class="bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-4 rounded-lg text-lg">
+                                                      ストップ
+                                                    </button>
+                                            <div id="result-div"></div>
+                                            <form action="{{ route('speech.store', $person->id) }}" method="POST">
+                                            @csrf
+                                              <input type="hidden" name="people_id" value="{{ $person->id }}">
+                                            <textarea id="result-speech" name="activity" class="w-full max-w-lg" style="height: 200px;"></textarea>
+                                            
+                                                <button type="submit" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150">
+                                                    送信
+                                                </button>
+                                            </form>
+                                            </details>
+                                            @endif
+                                            @else
+                                                <!-- 登録していない場合 -->
+                                               <details>
+                                                <summary class="text-red-500 font-bold text-xl">登録してください</summary>
+                                             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+                                                  <script src="https://kit.fontawesome.com/de653d534a.js" crossorigin="anonymous"></script>
+                                                    <i class="fa-solid fa-volume-high text-orange-400" style="font-size: 3em; padding: 0 5px;"></i>
+                                             
+                                                    <button id="start-btn" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-lg text-lg">
+                                                      スタート
+                                                    </button>
+                                            
+                                                    <button id="stop-btn" class="bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-4 rounded-lg text-lg">
+                                                      ストップ
+                                                    </button>
+                                            <div id="result-div"></div>
+                                            <form action="{{ route('speech.store', $person->id) }}" method="POST">
+                                            
+                                              @csrf
+                                              <input type="hidden" name="people_id" value="{{ $person->id }}">
+                                            <textarea id="result-speech" name="activity" class="w-full max-w-lg" style="height: 200px;"></textarea>
+                                            
+                                                <button type="submit" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150">
+                                                    送信
+                                                </button>
+                                            </form>
+                                            </details>
                                             @endif
                                         </div>
                                     </div>
@@ -580,6 +603,46 @@ function showToiletModal() {
     });
   }
 }
+
+const startBtn = document.querySelector('#start-btn');
+  const stopBtn = document.querySelector('#stop-btn');
+  const resultDiv = document.querySelector('#result-div');
+  const resultSpeech = document.querySelector('#result-speech');
+
+  SpeechRecognition = webkitSpeechRecognition || SpeechRecognition;
+  let recognition = new SpeechRecognition();
+
+  recognition.lang = 'ja-JP';
+  recognition.interimResults = true;
+  recognition.continuous = true;
+
+  let finalTranscript = ''; // 確定した(黒の)認識結果
+
+  recognition.onresult = (event) => {
+    let interimTranscript = ''; // 暫定(灰色)の認識結果
+    for (let i = event.resultIndex; i < event.results.length; i++) {
+      let transcript = event.results[i][0].transcript;
+      if (event.results[i].isFinal) {
+        
+        finalTranscript += transcript;
+        console.log('aaa');
+      } else {
+        
+        interimTranscript = transcript;
+        console.log('bbb');
+      }
+    }
+    // resultDiv.innerHTML = finalTranscript + '<i style="color:#ddd;">' + interimTranscript + '</i>';
+    console.log('ccc');
+    resultSpeech.value = finalTranscript + interimTranscript;
+  }
+
+  startBtn.onclick = () => {
+    recognition.start();
+  }
+  stopBtn.onclick = () => {
+    recognition.stop();
+  }
 // showToiletModal関数を定期的に実行する (例: 1分ごとに実行)
 setInterval(showToiletModal, 60000);
 const slides = document.querySelectorAll('.slide');
