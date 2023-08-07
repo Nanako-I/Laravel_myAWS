@@ -92,7 +92,11 @@ Route::post('food/{people_id}/edit', [FoodController::class,'store'])->name('foo
 
 Route::get('toilets/{id}', 'ToiletController@show')->name('toilets.show');
 Route::get('toilet/{people_id}/edit', [ToiletController::class, 'edit'])->name('toilet.edit');
-Route::post('toilet/{people_id}/edit', [ToiletController::class,'store'])->name('toilet.post');
+// Route::post('toilet/{people_id}/edit', [ToiletController::class,'store'])->name('toilet.post');
+
+// プルダウンで登録させるバージョン↓
+Route::post('toilets/{people_id}', [ToiletController::class,'store'])->name('toilet.store');
+
 // Route::get('people/{id}/edit', [TemperatureController::class, 'index'])->name('temperatures.index');
 
 // Route::get('speeches/{id}', 'SpeechController@show')->name('speeches.show');

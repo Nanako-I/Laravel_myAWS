@@ -8,6 +8,7 @@ namespace App\Http\Controllers;
 // Personモデルを呼び出している↓
 use App\Models\Person;
 use App\Models\Speech;
+use App\Models\Toilets;
 use App\Models\Temperature;
 use Illuminate\Http\Request;
 

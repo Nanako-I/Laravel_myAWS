@@ -53,7 +53,7 @@ class ToiletController extends Controller
         
         $toilet = Toilet::create([
         'people_id' => $request->people_id,
-        'urine_one' => $request->urine_one,
+        'urine_one' => $request->input('urine_one'), // チェックボックスの値ではなく、テキスト入力フィールドの値を保存
         'urine_two' => $request->urine_two,
         'urine_three' => $request->urine_three,
         'ben_one' => $request->ben_one,
@@ -64,8 +64,10 @@ class ToiletController extends Controller
          
     ]);
     // return redirect('people/{id}/edit');
-   $person = Person::findOrFail($request->people_id);
-    return redirect()->route('toilet.edit', ['people_id' => $person->id]); //
+     $people = Person::all();
+//   $person = Person::findOrFail($request->people_id);
+    // return redirect()->route('toilet.edit', ['people_id' => $person->id]); //
+    return view('people', compact('toilet', 'people'));
     }
 
     /**
