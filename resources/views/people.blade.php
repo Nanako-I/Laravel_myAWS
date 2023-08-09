@@ -396,145 +396,125 @@
                                         </div>
                                     <div class="flex items-center justify-center p-4">
                                    
-                                          　@if (!is_null($person) && count($person->toilets) > 0)
-                                          　
-                                              @php
-                                                $lastToilets = $person->toilets->last();
-                                                $urine_one = $lastToilets->urine_one;
-                                               $urine_one = $person->urine_one->last();
-                                                $urine_two = $person->urine_two->last();
-                                                $urine_three = $person->urine_three->last();
-                                                
-                                              @endphp
-                                            
+                                          @if (!is_null($person) && count($person->toilets) > 0)
+
+                                            @php
+                                            $lastToilets = $person->toilets->last();
+                                            @endphp
                                         
-                                           @if ($lastToilets === null || $lastToilets->created_at->diffInHours(now()) >= 6)
-                                           <details>
-                                              　<summary class="text-red-500 font-bold text-xl">誘導してください</summary>
-                                              　<form action="{{ route('toilet.store', $person->id) }}" method="POST">
-                                                    @csrf
+                                            @if ($lastToilets === null || $lastToilets->created_at->diffInHours(now()) >= 6)
+                                            <p class="text-red-500 font-bold text-xl">未排便{{ $lastToilets ? $lastToilets->created_at->diffInDays(now()) : 0 }}日目</p>
+                                            <details>
+                                              <summary class="text-red-500 font-bold text-xl">誘導してください</summary>
+                                              <form action="{{ route('toilet.store', $person->id) }}" method="POST">
+                                                @csrf
                                                 <input type="hidden" name="people_id" value="{{ $person->id }}">
-                                              <div style="display: flex; flex-direction: column; align-items: center;">
-  <h3>尿</h3>
- </div>
-  <div style="display: flex; align-items: center; margin-left: auto; margin-right: auto; max-width: 300px;">
-    <span class="text-gray-400 text-6xl" onclick="changeColor(this, 'urine_one')">
-      <!--<i class="material-icons md-48" id="urine_one">check_box</i>-->
-    </span>
-    <input type="checkbox" name="urine_one" id="urine_one" value="トイレ"> トイレ
-    <!--<input name="urine_one" type="text" id="urine_one_input" class="w-300 h-10px flex-shrink-0 break-words" placeholder="トイレ">-->
-  </div>
-  <div style="display: flex; align-items: center; margin-left: auto; margin-right: auto; max-width: 300px;">
-    <span class="text-gray-400 text-6xl" onclick="changeColor(this, 'urine_two')">
-      <i class="material-icons md-48" id="urine_two">check_box</i>
-    </span>
-    <input name="urine_two" type="text" id="urine_two_input" class="w-300 h-10px flex-shrink-0 break-words" placeholder="おむつ">
-  </div>
-  <div style="display: flex; align-items: center; margin-left: auto; margin-right: auto; max-width: 300px;">
-    <span class="text-gray-400 text-6xl" onclick="changeColor(this, 'urine_three')">
-      <i class="material-icons md-48" id="urine_three">check_box</i>
-    </span>
-    <input name="urine_three" type="text" id="urine_three_input" class="w-300 h-10px flex-shrink-0 break-words" placeholder="尿漏れ">
-  </div>
-  
-  <div style="display: flex; flex-direction: column; align-items: center;">
-        <h3>尿の色</h3>
-        <div style="display: flex; justify-content: center; align-items: center;">
-            <!--<p class ="text-2.5xl">うすい</p>-->
-            <!--<p class ="text-2.5xl">⇔</p>-->
-            <!--<p class ="text-2.5xl">濃い</p>-->
-            
-        </div>
-    <div style="display: flex; justify-content: center; align-items: center; margin-top: 10px;">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
-        <script src="https://kit.fontawesome.com/de653d534a.js" crossorigin="anonymous"></script>
-        <i class="fa-solid fa-droplet text-yellow-200" id="urine_color_1" style="font-size: 2em; padding: 0 5px; transition: transform 0.2s;"></i>
-        
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
-        <script src="https://kit.fontawesome.com/de653d534a.js" crossorigin="anonymous"></script>
-        <i class="fa-solid fa-droplet text-yellow-300"  id="urine_color_2" style="font-size: 2em; padding: 0 5px; transition: transform 0.2s;"></i>
-        
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
-        <script src="https://kit.fontawesome.com/de653d534a.js" crossorigin="anonymous"></script>
-        <i class="fa-solid fa-droplet text-yellow-500"  id="urine_color_3" style="font-size: 2em; padding: 0 5px; transition: transform 0.2s;"></i>
-    </div>
-    <div style="display: flex; align-items: center; margin-left: auto; margin-right: auto; max-width: 300px;">
-    <span class="text-gray-400 text-6xl" onclick="changeColor(this, 'urine_three')">
-      <i class="material-icons md-48 hidden" id="urine_three">check_box</i>
-    </span>
-    <input name="urine_color" type="text" id="urine_color_input" class="w-300 h-8px flex-shrink-0 break-words mt-px mb-1.5">
-  </div>
-</div>
-
-
-
-<div style="display: flex; flex-direction: column;">
- 
- 
- <div style="display: flex; align-items: center; margin-left: auto; margin-right: auto; max-width: 300px; my-2;">
-  <h3 class="my-2;">便</h3>
- </div>
-  <div style="display: flex; align-items: center; margin-left: auto; margin-right: auto; max-width: 300px;">
-    <span class="text-gray-400 text-6xl" onclick="changeColor(this, 'ben_one')">
-      <i class="material-icons md-48" id="ben_one">check_box</i>
-    </span>
-    <input name="ben_one" type="text" id="ben_one_input" class="w-300 h-10px flex-shrink-0 break-words" placeholder="トイレ">
-  </div>
-  <div style="display: flex; align-items: center; margin-left: auto; margin-right: auto; max-width: 300px;">
-    <span class="text-gray-400 text-6xl" onclick="changeColor(this, 'ben_two')">
-      <i class="material-icons md-48" id="ben_two">check_box</i>
-    </span>
-    <input name="ben_two" type="text" id="ben_two_input" class="w-300 h-10px flex-shrink-0 break-words" placeholder="おむつ">
-  </div>
-  <div style="display: flex; align-items: center; margin-left: auto; margin-right: auto; max-width: 300px;">
-    <span class="text-gray-400 text-6xl" onclick="changeColor(this, 'ben_three')">
-      <i class="material-icons md-48" id="ben_three">check_box</i>
-    </span>
-    <input name="ben_three" type="text" id="ben_three_input" class="w-300 h-10px flex-shrink-0 break-words" placeholder="付着あり">
-  </div>
-    
-
-  </div>
-  　<div style="display: flex; flex-direction: column; align-items: center; my-2;">
-        <h3>便の色</h3>
-        <div style="display: flex; justify-content: center; align-items: center;">
-            <!--<p class ="text-2.5xl">白</p>-->
-            <!--<p class ="text-2.5xl">茶</p>-->
-            <!--<p class ="text-2.5xl">黒</p>-->
-        </div>
-        <div style="display: flex; justify-content: center; align-items: center; margin-top: 10px;">
-            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
-            <script src="https://kit.fontawesome.com/de653d534a.js" crossorigin="anonymous"></script>
-           <i class="fa-solid fa-circle text-gray-300" id="ben_color_1" style="font-size: 2em; padding: 0 5px; transition: transform 0.2s;"></i>
-
-            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
-            <script src="https://kit.fontawesome.com/de653d534a.js" crossorigin="anonymous"></script>
-            <i class="fa-solid fa-circle text-amber-800" id="ben_color_2" style="font-size: 2em; padding: 0 5px; transition: transform 0.2s;"></i>
-    
-            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
-            <script src="https://kit.fontawesome.com/de653d534a.js" crossorigin="anonymous"></script>
-            <i class="fa-solid fa-circle text-black" id="ben_color_3" style="font-size: 2em; padding: 0 5px; transition: transform 0.2s;"></i>
-        </div>
-        <div style="display: flex; align-items: center; margin-left: auto; margin-right: auto; max-width: 300px;">
-        <span class="text-gray-400 text-6xl" onclick="changeColor(this, 'urine_three')">
-          <i class="material-icons md-48 hidden" id="urine_three">check_box</i>
-        </span>
-        <input name="ben_color" type="text" id="ben_color_input" class="w-300 h-8px flex-shrink-0 break-words mt-px mb-1.5">
-        </div>
-    </div>
-
-　　<div style="display: flex; align-items: center; margin-left: auto; margin-right: auto; max-width: 300px;">
-     <button type="submit" class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded-lg text-lg mr-4">
-       送信
-     </button>
-    </div>
-  
-  </details>
-        </form>
+                                                <div style="display: flex; flex-direction: column; align-items: center;">
+                                                  <h3>尿</h3>
+                                                  
+                                                  <div style="max-width: 300px;">
+                                                    <div class="checkbox-container">
+                                                      <input type="checkbox" name="urine_one" id="urine_one" value="トイレ"> トイレ
+                                                    </div>
+                                                    
+                                                    <div class="checkbox-container">
+                                                      <input type="checkbox" name="urine_two" id="urine_two" value="おむつ"> おむつ
+                                                    </div>
+                                                    
+                                                    <div class="checkbox-container">
+                                                      <input type="checkbox" name="urine_three" id="urine_three" value="尿漏れ"> 尿漏れ
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                                
+                                                  <style>
+                                                  .checkbox-container {
+                                                    display: flex;
+                                                    align-items: center;
+                                                  }
+                                                  input[type="checkbox"] {
+                                                    margin-right: 8px;
+                                                  }
+                                                </style>
+                                            
+                                                <div style="display: flex; flex-direction: column; align-items: center;">
+                                                    <h3>尿の色</h3>
+                                                        <div style="display: flex; justify-content: center; align-items: center;">
+                                                        </div>
+                                                        <div style="display: flex; justify-content: center; align-items: center; margin-top: 10px;">
+                                                            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+                                                            <script src="https://kit.fontawesome.com/de653d534a.js" crossorigin="anonymous"></script>
+                                                            <i class="fa-solid fa-droplet text-yellow-200" id="urine_color_1" style="font-size: 2em; padding: 0 5px; transition: transform 0.2s;"></i>
+                                                            <input type="checkbox" name="urine_color_1" id="urine_color_1" value="うすい"> うすい
+                                                            
+                                                            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+                                                            <script src="https://kit.fontawesome.com/de653d534a.js" crossorigin="anonymous"></script>
+                                                            <i class="fa-solid fa-droplet text-yellow-300"  id="urine_color_2" style="font-size: 2em; padding: 0 5px; transition: transform 0.2s;"></i>
+                                                            <input type="checkbox" name="urine_color_2" id="urine_color_2" value="普通"> 普通
+                                                            
+                                                            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+                                                            <script src="https://kit.fontawesome.com/de653d534a.js" crossorigin="anonymous"></script>
+                                                            <i class="fa-solid fa-droplet text-yellow-500"  id="urine_color_3" style="font-size: 2em; padding: 0 5px; transition: transform 0.2s;"></i>
+                                                            <input type="checkbox" name="urine_color_3" id="urine_color_3" value="濃い"> 濃い
+                                                        </div>
+                                                 </div>
+                                            
+                                            <div style="display: flex; flex-direction: column; align-items: center;">
+                                              <h3>便</h3>
+                                                <div style="max-width: 300px;">
+                                                    <div class="checkbox-container">
+                                                        <input type="checkbox" name="ben_one" id="ben_one" value="トイレ">トイレ
+                                                  　</div>
+                                                    <div class="checkbox-container">
+                                                        <input type="checkbox" name="ben_two" id="ben_two" value="おむつ"> おむつ
+                                                    </div>
+                                                    <div class="checkbox-container">
+                                                        <input type="checkbox" name="ben_three" id="ben_three" value="付着あり"> 付着あり
+                                                     </div>
+                                                </div>
+                                             </div>
+                                                <style>
+                                                  .checkbox-container {
+                                                    display: flex;
+                                                    align-items: center;
+                                                  }
+                                                  input[type="checkbox"] {
+                                                    margin-right: 8px;
+                                                  }
+                                                </style>
+                                            
+                                             
+                                              　<div style="display: flex; flex-direction: column; align-items: center; my-2;">
+                                                    <h3>便の色</h3>
+                                                    <div style="display: flex; justify-content: center; align-items: center;">
+                                                    </div>
+                                                    <div style="display: flex; justify-content: center; align-items: center; margin-top: 10px;">
+                                                        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+                                                        <script src="https://kit.fontawesome.com/de653d534a.js" crossorigin="anonymous"></script>
+                                                       　<i class="fa-solid fa-circle text-gray-300" id="ben_color_1" style="font-size: 2em; padding: 0 5px; transition: transform 0.2s;"></i>
+                                                       　<input type="checkbox" name="ben_color_1" id="ben_color_1" value="白"> 白
+                                            
+                                                        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+                                                        <script src="https://kit.fontawesome.com/de653d534a.js" crossorigin="anonymous"></script>
+                                                        <i class="fa-solid fa-circle text-amber-800" id="ben_color_2" style="font-size: 2em; padding: 0 5px; transition: transform 0.2s;"></i>
+                                                         <input type="checkbox" name="ben_color_2" id="ben_color_2" value="茶"> 茶
+                                                
+                                                        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+                                                        <script src="https://kit.fontawesome.com/de653d534a.js" crossorigin="anonymous"></script>
+                                                        <i class="fa-solid fa-circle text-black" id="ben_color_3" style="font-size: 2em; padding: 0 5px; transition: transform 0.2s;"></i>
+                                                        <input type="checkbox" name="ben_color_3" id="ben_color_3" value="黒"> 黒
+                                                    </div>
+                                                </div>
+                                            　　<div style="display: flex; flex-direction: column; align-items: center;">
+                                            　　<button type="submit" class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded-lg text-lg mr-4">
+                                                   送信
+                                                 </button>
+                                                </div>
+                                              </form>
+                                            </details>
                                               @else
-                                              @if($urine_one->created_at->diffInHours(now()) <= 6 || $lastToilets->urine_two || $lastToilets->urine_three)
-                                               
-                                                <div class="mx-1.5">
+                                              @if($lastToilets->urine_one || $lastToilets->urine_two || $lastToilets->urine_three)
+                                               <div class="mx-1.5">
                                                 <p class="text-gray-900 font-bold text-sm">尿</p>
                                                   @if($lastToilets->urine_one)
                                                   <a href="{{ route('toilets.show', $lastToilets->id) }}" class="text-gray-900 font-bold text-xl">{{ $lastToilets->urine_one }}</a>
@@ -545,7 +525,7 @@
                                                   @if($lastToilets->urine_three)
                                                   <a href="{{ route('toilets.show', $lastToilets->id) }}" class="text-gray-900 font-bold text-xl">{{ $lastToilets->urine_three }}</a>
                                                   @endif
-                                                 </div>
+                                                </div>
                                                 @endif
                                                   @if($lastToilets->ben_one || $lastToilets->ben_two || $lastToilets->ben_three)
                                                    <div class="mx-1.5">
@@ -560,18 +540,122 @@
                                                     <a href="{{ route('toilets.show', $lastToilets->id) }}" class="text-gray-900 font-bold text-xl">{{ $lastToilets->ben_three }}</a>
                                                     @endif
                                                    </div>
-                                                  @endif
-                                            @endif
+                                                　@endif
+                                            　@endif
+                                            @else
+                                            
+                                            <details>
+                                              <summary class="text-red-500 font-bold text-xl">誘導してください</summary>
+                                              <form action="{{ route('toilet.store', $person->id) }}" method="POST">
+                                                @csrf
+                                                <input type="hidden" name="people_id" value="{{ $person->id }}">
+                                                <div style="display: flex; flex-direction: column; align-items: center;">
+                                                  <h3>尿</h3>
+                                                  
+                                                  <div style="max-width: 300px;">
+                                                    <div class="checkbox-container">
+                                                      <input type="checkbox" name="urine_one" id="urine_one" value="トイレ"> トイレ
+                                                    </div>
+                                                    
+                                                    <div class="checkbox-container">
+                                                      <input type="checkbox" name="urine_two" id="urine_two" value="おむつ"> おむつ
+                                                    </div>
+                                                    
+                                                    <div class="checkbox-container">
+                                                      <input type="checkbox" name="urine_three" id="urine_three" value="尿漏れ"> 尿漏れ
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                                
+                                                  <style>
+                                                  .checkbox-container {
+                                                    display: flex;
+                                                    align-items: center;
+                                                  }
+                                                  input[type="checkbox"] {
+                                                    margin-right: 8px;
+                                                  }
+                                                </style>
+                                            
+                                                <div style="display: flex; flex-direction: column; align-items: center;">
+                                                    <h3>尿の色</h3>
+                                                        <div style="display: flex; justify-content: center; align-items: center;">
+                                                        </div>
+                                                        <div style="display: flex; justify-content: center; align-items: center; margin-top: 10px;">
+                                                            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+                                                            <script src="https://kit.fontawesome.com/de653d534a.js" crossorigin="anonymous"></script>
+                                                            <i class="fa-solid fa-droplet text-yellow-200" id="urine_color_1" style="font-size: 2em; padding: 0 5px; transition: transform 0.2s;"></i>
+                                                            <input type="checkbox" name="urine_color_1" id="urine_color_1" value="うすい"> うすい
+                                                            
+                                                            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+                                                            <script src="https://kit.fontawesome.com/de653d534a.js" crossorigin="anonymous"></script>
+                                                            <i class="fa-solid fa-droplet text-yellow-300"  id="urine_color_2" style="font-size: 2em; padding: 0 5px; transition: transform 0.2s;"></i>
+                                                            <input type="checkbox" name="urine_color_2" id="urine_color_2" value="普通"> 普通
+                                                            
+                                                            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+                                                            <script src="https://kit.fontawesome.com/de653d534a.js" crossorigin="anonymous"></script>
+                                                            <i class="fa-solid fa-droplet text-yellow-500"  id="urine_color_3" style="font-size: 2em; padding: 0 5px; transition: transform 0.2s;"></i>
+                                                            <input type="checkbox" name="urine_color_3" id="urine_color_3" value="濃い"> 濃い
+                                                        </div>
+                                                 </div>
+                                            
+                                            <div style="display: flex; flex-direction: column; align-items: center;">
+                                              <h3>便</h3>
+                                                <div style="max-width: 300px;">
+                                                    <div class="checkbox-container">
+                                                        <input type="checkbox" name="ben_one" id="ben_one" value="トイレ">トイレ
+                                                  　</div>
+                                                    <div class="checkbox-container">
+                                                        <input type="checkbox" name="ben_two" id="ben_two" value="おむつ"> おむつ
+                                                    </div>
+                                                    <div class="checkbox-container">
+                                                        <input type="checkbox" name="ben_three" id="ben_three" value="付着あり"> 付着あり
+                                                     </div>
+                                                </div>
+                                             </div>
+                                                <style>
+                                                  .checkbox-container {
+                                                    display: flex;
+                                                    align-items: center;
+                                                  }
+                                                  input[type="checkbox"] {
+                                                    margin-right: 8px;
+                                                  }
+                                                </style>
+                                            
+                                             
+                                              　<div style="display: flex; flex-direction: column; align-items: center; my-2;">
+                                                    <h3>便の色</h3>
+                                                    <div style="display: flex; justify-content: center; align-items: center;">
+                                                    </div>
+                                                    <div style="display: flex; justify-content: center; align-items: center; margin-top: 10px;">
+                                                        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+                                                        <script src="https://kit.fontawesome.com/de653d534a.js" crossorigin="anonymous"></script>
+                                                       　<i class="fa-solid fa-circle text-gray-300" id="ben_color_1" style="font-size: 2em; padding: 0 5px; transition: transform 0.2s;"></i>
+                                                       　<input type="checkbox" name="ben_color_1" id="ben_color_1" value="白"> 白
+                                            
+                                                        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+                                                        <script src="https://kit.fontawesome.com/de653d534a.js" crossorigin="anonymous"></script>
+                                                        <i class="fa-solid fa-circle text-amber-800" id="ben_color_2" style="font-size: 2em; padding: 0 5px; transition: transform 0.2s;"></i>
+                                                         <input type="checkbox" name="ben_color_2" id="ben_color_2" value="茶"> 茶
+                                                
+                                                        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+                                                        <script src="https://kit.fontawesome.com/de653d534a.js" crossorigin="anonymous"></script>
+                                                        <i class="fa-solid fa-circle text-black" id="ben_color_3" style="font-size: 2em; padding: 0 5px; transition: transform 0.2s;"></i>
+                                                        <input type="checkbox" name="ben_color_3" id="ben_color_3" value="黒"> 黒
+                                                    </div>
+                                                </div>
+                                            　　<div style="display: flex; flex-direction: column; align-items: center;">
+                                            　　<button type="submit" class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded-lg text-lg mr-4">
+                                                   送信
+                                                 </button>
+                                                </div>
+                                              </form>
+                                            </details>
                                         @endif  
-                                        
-                                    
-
-                                        <a href="{{ url('toilet/'.$person->id.'/edit') }}"></a>
-                                       
-                                          @csrf
-                                        <i class="material-icons md-90 ml-auto">add</i>
                                     </div>
                                   </div>
+                                 
                                         
                                          <!-- 活動登録↓ -->
                         　    　<div class="border-2 p-2 rounded-lg bg-white m-2">

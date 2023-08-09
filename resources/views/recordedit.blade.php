@@ -43,22 +43,28 @@
      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
      <script src="https://kit.fontawesome.com/de653d534a.js" crossorigin="anonymous"></script>
      
+@php
+$today = now()->format('Y-m-d'); // 今日の日付を取得（例：2023-08-07）
+@endphp
+
 <table style="padding: 10px;">
   <thead>
     <tr>
-      <!--<th>Date</th>-->
       <th style="width: 180px;">体温 <i class="fa-solid fa-thermometer text-gray-500 hover:text-white" style="font-size: 1.7em; padding: 0 5px;"></i></th>
     </tr>
   </thead>
   <tbody>
     @foreach($temperatures as $temperature)
+    @if(\Carbon\Carbon::parse($temperature->created_at)->format('Y-m-d') === $today)
     <tr>
       <td>{{ \Carbon\Carbon::parse($temperature->created_at)->format('H:i') }}</td>
       <td>{{ $temperature->temperature }}℃</td>
     </tr>
+    @endif
     @endforeach
   </tbody>
 </table>
+
 
 <table>
   <thead>
@@ -69,12 +75,14 @@
   </thead>
   <tbody>
     @foreach($foods as $food)
+    @if(\Carbon\Carbon::parse($food->created_at)->format('Y-m-d') === $today)
     <tr>
       <td>{{ \Carbon\Carbon::parse($food->created_at)->format('H:i') }}</td>
       <td>主食（ごはん）は{{ $food->staple_food }}割、副食（おかず）は{{ $food->side_dish }}割でした。</td>
       
       <!--<td>薬の服用は{{ $food->medicine == 'yes' ? 'あり' : 'なし' }}。</td>-->
     </tr>
+    @endif
     @endforeach
   </tbody>
 </table>
@@ -88,10 +96,12 @@
   </thead>
   <tbody>
     @foreach($toilets as $toilet)
+    @if(\Carbon\Carbon::parse($toilet->created_at)->format('Y-m-d') === $today)
     <tr>
       <td>{{ \Carbon\Carbon::parse($toilet->created_at)->format('H:i') }}</td>
-      <td>尿　{{ $toilet->urine_one }}　便　{{ $toilet->ben_two }}</td>
+      <td>尿：{{ $toilet->urine_one }}{{ $toilet->urine_two }}{{ $toilet->urine_three }}便：{{ $toilet->ben_one }}{{ $toilet->ben_two }}{{ $toilet->ben_three }}</td>
     </tr>
+    @endif
     @endforeach
   </tbody>
 </table>
@@ -107,9 +117,11 @@
   </thead>
   <tbody>
     @foreach($speeches as $speech)
+    @if(\Carbon\Carbon::parse($speech->created_at)->format('Y-m-d') === $today)
     <tr>
       <td>{{ $speech->activity }}</td>
     </tr>
+    @endif
     @endforeach
   </tbody>
 </table>
