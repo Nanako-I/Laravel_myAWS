@@ -8,6 +8,7 @@ use App\Http\Controllers\PhotoController;//追記
 use App\Http\Controllers\TemperatureController;
 use App\Http\Controllers\FoodController;
 use App\Http\Controllers\ToiletController;
+use App\Http\Controllers\CarController;
 use App\Http\Controllers\SpeechController;
 use App\Http\Controllers\RecordController;
 
@@ -97,7 +98,10 @@ Route::get('toilet/{people_id}/edit', [ToiletController::class, 'edit'])->name('
 // プルダウンで登録させるバージョン↓
 Route::post('toilets/{people_id}', [ToiletController::class,'store'])->name('toilet.store');
 
-// Route::get('people/{id}/edit', [TemperatureController::class, 'index'])->name('temperatures.index');
+Route::post('cars/{people_id}', [CarController::class, 'store'])->name('cars.store');
+Route::get('cars/{people_id}', [CarController::class, 'show'])->name('cars.show');
+// Route::get('temperatures/{people_id}', [PersonController::class, 'index'])->name('temperatures.show');
+Route::get('cars/{people_id}/edit', [CarController::class, 'edit'])->name('cars.edit');
 
 // Route::get('speeches/{id}', 'SpeechController@show')->name('speeches.show');
 // Route::get('speech/{people_id}/edit', [SpeechController::class, 'edit'])->name('speech.edit');
