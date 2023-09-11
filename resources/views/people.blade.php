@@ -403,9 +403,12 @@
                                             @endphp
                                         
                                             @if ($lastToilets === null || $lastToilets->created_at->diffInHours(now()) >= 6)
-                                            <p class="text-red-500 font-bold text-xl">未排便{{ $lastToilets ? $lastToilets->created_at->diffInDays(now()) : 0 }}日目</p>
+                                            
                                             <details>
-                                              <summary class="text-red-500 font-bold text-xl">誘導してください</summary>
+                                                
+                                              <summary class="text-red-500 font-bold text-xl">誘導してください
+                                              <p class="text-red-500 font-bold text-xl">未排便{{ $lastToilets ? $lastToilets->created_at->diffInDays(now()) : 0 }}日目</p>
+                                              </summary>
                                               <form action="{{ route('toilet.store', $person->id) }}" method="POST">
                                                 @csrf
                                                 <input type="hidden" name="people_id" value="{{ $person->id }}">
