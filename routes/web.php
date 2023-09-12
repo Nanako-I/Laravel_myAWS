@@ -11,6 +11,8 @@ use App\Http\Controllers\ToiletController;
 use App\Http\Controllers\CarController;
 use App\Http\Controllers\SpeechController;
 use App\Http\Controllers\RecordController;
+use App\Http\Controllers\SpreadsheetController; // Qiitaの記事
+
 
 // use Google\Cloud\Speech\V1p1beta1\StreamingRecognitionConfig;
 // use Google\Cloud\Speech\V1p1beta1\StreamingRecognizeRequest;
@@ -115,6 +117,15 @@ Route::get('/speech/{id}/edit', 'SpeechController@edit')->name('speech.edit');
 
 Route::get('record/{id}/edit', [RecordController::class, 'show'])->name('record.edit');
 Route::get('people/{id}/edit', [PersonController::class, 'edit'])->name('people.edit');
+
+Route::get('/download',[SpreadsheetController::class,'chart'])->name('chart');
+// Qiitaの記事↓
+// Route::get('/index', [SpreadsheetController::class, 'index']);
+// Route::post('/download', [SpreadsheetController::class, 'download']);
+
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 
 // Route::get('/photo/upload', PhotoController::class, 'uploadForm')->name('photo.upload.form');

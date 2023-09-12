@@ -823,6 +823,14 @@
                 </div>
               @endif
             @endif
+            
+            <div>
+            <form action="{{ route('chart') }}" method="GET">
+                @csrf
+                <h2>下記のボタンを押下してExcelファイルをダウンロードしてください。</h2>
+                <button>download</button>
+            </form>
+        </div>
     </div>
   </div>
 <!--</section>-->
