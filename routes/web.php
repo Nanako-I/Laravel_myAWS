@@ -12,6 +12,7 @@ use App\Http\Controllers\CarController;
 use App\Http\Controllers\SpeechController;
 use App\Http\Controllers\RecordController;
 use App\Http\Controllers\SpreadsheetController; // Qiitaの記事
+use App\Http\Controllers\UploadController;
 
 
 // use Google\Cloud\Speech\V1p1beta1\StreamingRecognitionConfig;
@@ -119,6 +120,10 @@ Route::get('record/{id}/edit', [RecordController::class, 'show'])->name('record.
 Route::get('people/{id}/edit', [PersonController::class, 'edit'])->name('people.edit');
 
 Route::get('/download',[SpreadsheetController::class,'chart'])->name('chart');
+
+Route::resource('upload',UploadController::class);
+// Route::resource('/upload', 'UploadController');
+
 // Qiitaの記事↓
 // Route::get('/index', [SpreadsheetController::class, 'index']);
 // Route::post('/download', [SpreadsheetController::class, 'download']);
