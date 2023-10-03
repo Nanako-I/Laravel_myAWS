@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Storage;
 
 use App\Http\Controllers\PersonController;//追記
 use App\Http\Controllers\PhotoController;//追記
@@ -13,6 +14,7 @@ use App\Http\Controllers\SpeechController;
 use App\Http\Controllers\RecordController;
 use App\Http\Controllers\SpreadsheetController; // Qiitaの記事
 use App\Http\Controllers\UploadController;
+use App\Http\Controllers\ChartController;
 
 
 // use Google\Cloud\Speech\V1p1beta1\StreamingRecognitionConfig;
@@ -122,7 +124,22 @@ Route::get('people/{id}/edit', [PersonController::class, 'edit'])->name('people.
 Route::get('/download',[SpreadsheetController::class,'chart'])->name('chart');
 
 Route::resource('upload',UploadController::class);
-// Route::resource('/upload', 'UploadController');
+// Route::delete('/delete/{fileName}', 'UploadController@deleteFile');
+Route::delete('/delete/{fileName}', function ($fileName) {
+    // ファイルを削除
+    Storage::delete('public/' . $fileName);
+    
+    return response()->json(['message' => 'ファイルが削除されました']);
+});
+
+Route::post('/read-pdf', 'PdfController@readPdf');
+
+Route::get('chart/{id}/edit', [ChartController::class, 'show'])->name('chart.edit');
+
+
+// Route::get('/chartedit', function () {
+//     return view('chartedit');
+// });
 
 // Qiitaの記事↓
 // Route::get('/index', [SpreadsheetController::class, 'index']);

@@ -661,12 +661,12 @@
                                   
                                   <!-- 送迎登録↓ -->
                                     <div class="border-2 p-2 rounded-lg bg-white m-2">
-                                      <div class="flex justify-start items-center">
-                                        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
-                                        <script src="https://kit.fontawesome.com/de653d534a.js" crossorigin="anonymous"></script>
-                                        <i class="fa-solid fa-bus text-purple-700" style="font-size: 2em; padding: 0 5px; transition: transform 0.2s;"></i>
-                                        <p class="text-purple-700 font-bold text-xl ml-2">送迎</p>
-                                    </div>
+                                        <div class="flex justify-start items-center">
+                                            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+                                            <script src="https://kit.fontawesome.com/de653d534a.js" crossorigin="anonymous"></script>
+                                            <i class="fa-solid fa-bus text-purple-700" style="font-size: 2em; padding: 0 5px; transition: transform 0.2s;"></i>
+                                            <p class="text-purple-700 font-bold text-xl ml-2">送迎</p>
+                                        </div>
                                     
                                     <!-- people.blade.php -->
                                    <div class="flex items-center justify-center p-4">
@@ -707,6 +707,201 @@
                                                 </form>
                                         @endif
                                     </div>
+                                </div>
+                                
+                                <!-- 問題行動登録↓ -->
+                                    <div class="border-2 p-2 rounded-lg bg-white m-2">
+                                        <div class="flex justify-start items-center">
+                                            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+                                            <script src="https://kit.fontawesome.com/de653d534a.js" crossorigin="anonymous"></script>
+                                            <i class="fa-solid fa-person-burst text-blue-700" style="font-size: 2em; padding: 0 5px; transition: transform 0.2s;"></i>
+                                            <p class="text-blue-700 font-bold text-xl ml-2">問題行動</p>
+                                        </div>
+                                    
+                                    <div class="flex items-center justify-center p-4">
+                                    <details>
+                                        <summary class="text-red-500 font-bold text-xl">問題行動はありましたか？</summary>
+                                        <!--<form action="{{ route('cars.store', $person->id) }}" method="POST">-->
+                                    @csrf
+                                    　　
+                                    　　<div style="display: flex; flex-direction: column; align-items: center;">
+                                          <h3>今日の問題行動</h3>
+                                          
+                                          <div style="max-width: 300px;">
+                                            <div class="checkbox-container">
+                                              <input type="checkbox" name="" id="" value="他害"> 他害
+                                            </div>
+                                            
+                                            <div class="checkbox-container">
+                                              <input type="checkbox" name="" id="" value="自傷"> 自傷
+                                            </div>
+                                            
+                                            <div class="checkbox-container">
+                                              <input type="checkbox" name="" id="" value="激しいこだわり">激しいこだわり 
+                                            </div>
+                                            
+                                            <div class="checkbox-container">
+                                              <input type="checkbox" name="" id="" value="大声・大泣き">大声・大泣き
+                                            </div>
+                                            
+                                            <div class="checkbox-container">
+                                              <input type="checkbox" name="" id="" value="破壊">破壊 
+                                            </div>
+                                            
+                                            <div class="checkbox-container">
+                                              <input type="checkbox" name="" id="" value="睡眠の乱れ">睡眠の乱れ 
+                                            </div>
+                                            
+                                            <div class="checkbox-container">
+                                              <input type="checkbox" name="" id="" value="食事関係の行動">食事関係の行動 
+                                            </div>
+                                            
+                                            <div class="checkbox-container">
+                                              <input type="checkbox" name="" id="" value="排泄関係の行動">排泄関係の行動 
+                                            </div>
+                                            
+                                             <div class="checkbox-container">
+                                              <input type="checkbox" name="" id="" value="無し">無し 
+                                            </div>
+                                            
+                                             <input type="hidden" name="people_id" value="{{ $person->id }}">
+                                             <p>問題行動の詳細</p>
+                                            <input name="" id="text-box" class="appearance-none block w-full text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white font-bold" type="text" placeholder="">
+                                            
+                                            <p>問題行動の前の出来事</p>
+                                            
+                                            <div class="checkbox-container">
+                                              <input type="checkbox" name="" id="" value="口腔ケア"> 口腔ケア
+                                            </div>
+                                            
+                                            <div class="checkbox-container">
+                                              <input type="checkbox" name="" id="" value="食事準備">食事準備 
+                                            </div>
+                                            
+                                            <div class="checkbox-container">
+                                              <input type="checkbox" name="" id="" value="食事中">食事中
+                                            </div>
+                                            
+                                            <div class="checkbox-container">
+                                              <input type="checkbox" name="" id="" value="食事片付け">食事片付け
+                                            </div>
+                                            
+                                            <div class="checkbox-container">
+                                              <input type="checkbox" name="" id="" value="作業準備">作業準備
+                                            </div>
+                                            
+                                            <div class="checkbox-container">
+                                              <input type="checkbox" name="" id="" value="作業中">作業中
+                                            </div>
+                                            
+                                            <div class="checkbox-container">
+                                              <input type="checkbox" name="" id="" value="トイレ">トイレ 
+                                            </div>
+                                            
+                                            <div class="checkbox-container">
+                                              <input type="checkbox" name="" id="" value="入浴準備">入浴準備 
+                                            </div>
+                                            
+                                             <div class="checkbox-container">
+                                              <input type="checkbox" name="" id="" value="入浴中">入浴中 
+                                            </div>
+                                            
+                                            <input type="hidden" name="people_id" value="{{ $person->id }}">
+                                             <p>問題行動の前の様子</p>
+                                            <input name="" id="text-box" class="appearance-none block w-full text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white font-bold" type="text" placeholder="">
+                                            
+                                            <p>問題行動が落ち着き始めた時</p>
+                                            
+                                            <div class="checkbox-container">
+                                              <input type="checkbox" name="" id="" value="口腔ケア"> 口腔ケア
+                                            </div>
+                                            
+                                            <div class="checkbox-container">
+                                              <input type="checkbox" name="" id="" value="食事準備">食事準備 
+                                            </div>
+                                            
+                                            <div class="checkbox-container">
+                                              <input type="checkbox" name="" id="" value="食事中">食事中
+                                            </div>
+                                            
+                                            <div class="checkbox-container">
+                                              <input type="checkbox" name="" id="" value="食事片付け">食事片付け
+                                            </div>
+                                            
+                                            <div class="checkbox-container">
+                                              <input type="checkbox" name="" id="" value="作業準備">作業準備
+                                            </div>
+                                            
+                                            <div class="checkbox-container">
+                                              <input type="checkbox" name="" id="" value="作業中">作業中
+                                            </div>
+                                            
+                                            <div class="checkbox-container">
+                                              <input type="checkbox" name="" id="" value="トイレ">トイレ 
+                                            </div>
+                                            
+                                            <div class="checkbox-container">
+                                              <input type="checkbox" name="" id="" value="入浴準備">入浴準備 
+                                            </div>
+                                            
+                                             <div class="checkbox-container">
+                                              <input type="checkbox" name="" id="" value="入浴中">入浴中 
+                                            </div>
+                                            
+                                            
+                                            <p>備考</p>
+                                            <input name="" id="text-box" class="appearance-none block w-full text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white font-bold" type="text" placeholder="">
+                                            
+                                            <button type="submit" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150">
+                                                送信
+                                            </button>
+                                        
+                                          </div>
+                                        </div>
+                                    </div>            
+                                       
+                                    </details>
+                                    </form>
+                                                
+                                    <!-- people.blade.php -->
+                                   <!--<div class="flex items-center justify-center p-4">-->
+                                   <!--     @if (!is_null($person) && is_countable($person->cars) && count($person->cars) > 0)-->
+                                   <!--     @php-->
+                                   <!--        $lastCarMorning = $person->car_mornings->last();-->
+                                   <!--        $lastCarEvening = $person->car_evenings->last();-->
+                                   <!--     @endphp-->
+                                   <!--         @if ($lastCarMorning->created_at->diffInHours(now()) >= 6)-->
+                                                <!-- 送迎フォーム -->
+                                                
+                                   <!--                 <details>-->
+                                   <!--                     <summary class="text-red-500 font-bold text-xl">今日の送迎</summary>-->
+                                   <!--                     <form action="{{ route('cars.store', $person->id) }}" method="POST">-->
+                                   <!--                 @csrf-->
+                                   <!--                     <input type="hidden" name="people_id" value="{{ $person->id }}">-->
+                                   <!--                     <input name="car_morning" id="text-box" class="appearance-none block w-1/4 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white font-bold" type="text" placeholder="">-->
+                                   <!--                     <button type="submit" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150">-->
+                                   <!--                         送信-->
+                                   <!--                     </button>-->
+                                   <!--                 </details>-->
+                                   <!--             </form>-->
+                                   <!--         @else-->
+                                                
+                                   <!--             <a href="{{ route('cars.show', $lastCarMorning->id) }}" class="font-bold text-xl">{{ $lastCarMorning->car_morning }}</a>-->
+                                   <!--         @endif-->
+                                   <!--          @else-->
+                                   <!--          <details>-->
+                                   <!--                     <summary class="text-red-500 font-bold text-xl">今日の送迎</summary>-->
+                                   <!--                     <form action="{{ route('cars.store', $person->id) }}" method="POST">-->
+                                   <!--                 @csrf-->
+                                   <!--                     <input type="hidden" name="people_id" value="{{ $person->id }}">-->
+                                   <!--                     <input name="car_morning" id="text-box" class="appearance-none block w-1/4 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white font-bold" type="text" placeholder="">-->
+                                   <!--                     <button type="submit" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150">-->
+                                   <!--                         送信-->
+                                   <!--                     </button>-->
+                                   <!--                 </details>-->
+                                   <!--             </form>-->
+                                   <!--     @endif-->
+                                   <!-- </div>-->
                                 </div>
                                 
                                          <!-- 活動登録↓ -->
