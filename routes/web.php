@@ -137,9 +137,9 @@ Route::post('/read-pdf', 'PdfController@readPdf');
 Route::get('chart/{id}/edit', [ChartController::class, 'show'])->name('chart.edit');
 
 
-// Route::get('/chartedit', function () {
-//     return view('chartedit');
-// });
+Route::get('/chartjs', function () {
+    return view('chartjs');
+});
 
 // Qiitaの記事↓
 // Route::get('/index', [SpreadsheetController::class, 'index']);
