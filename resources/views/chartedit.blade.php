@@ -29,16 +29,34 @@
             <canvas id="myChart"></canvas>
         </div>
         <div>
-            <canvas id="temperatureChart"></canvas>
+            <canvas id="sampleChart"></canvas>
         </div>
-        
-        <!--<canvas id="temperatureChart" data-labels="@json($labels)" data-data="@json($data)"></canvas>-->
-        
+        <div>
+            <!--json_encode 関数を使用-->
+            <!--PHPの変数 $labels と $data がJSON形式でJavaScriptに渡される↓-->
+            <canvas id="temperatureChart" data-labels="{{ json_encode($labels) }}" data-data="{{ json_encode($data) }}"></canvas>
+        </div>
+    　　<div>
+            <!--json_encode 関数を使用-->
+            <!--PHPの変数 $labels と $data がJSON形式でJavaScriptに渡される↓-->
+           <canvas id="benChart" data-ben-labels="{{ json_encode($toilet_labels) }}" data-ben-data="{{ json_encode($ben_data) }}"></canvas>
+
+        </div>
          
     </div>
   </div>
   
   </body>
+  
+  　<script>
+       
+        
+        var toiletLabels = @json($toilet_labels);
+    var benData = @json($ben_data);
+  var chartData = @json($chartData);
+    
+    </script>
+    
  </x-app-layout>
   
 {{-- 追加した Blade ディレクティブ --}}

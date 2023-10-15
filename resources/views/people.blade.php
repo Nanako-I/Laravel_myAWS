@@ -466,16 +466,57 @@
                                               <h3>便</h3>
                                                 <div style="max-width: 300px;">
                                                     <div class="checkbox-container">
-                                                        <input type="checkbox" name="ben_one" id="ben_one" value="トイレ">トイレ
+                                                        <input type="checkbox" name="ben_one" id="ben_one" value="コロコロ便">コロコロ便
                                                   　</div>
                                                     <div class="checkbox-container">
-                                                        <input type="checkbox" name="ben_two" id="ben_two" value="おむつ"> おむつ
+                                                        <input type="checkbox" name="ben_two" id="ben_two" value="やや硬い便"> やや硬い便
                                                     </div>
                                                     <div class="checkbox-container">
-                                                        <input type="checkbox" name="ben_three" id="ben_three" value="付着あり"> 付着あり
+                                                        <input type="checkbox" name="ben_three" id="ben_three" value="普通便"> 普通便
                                                      </div>
+                                                     
+                                                     <!--下記やわらかい便/泥状便/水様便の追加データベース必要↓-->
+                                                    
+                                                     <div class="checkbox-container">
+                                                        <input type="checkbox" name="ben_four" id="ben_four" value="やや軟らかい便"> やややわらかい便
+                                                     </div>
+                                                     
+                                                     <div class="checkbox-container">
+                                                        <input type="checkbox" name="ben_five" id="ben_five" value="泥状便"> 泥状便
+                                                     </div>
+                                                     
+                                                     <div class="checkbox-container">
+                                                        <input type="checkbox" name="ben_six" id="ben_six" value="水様便"> 水様便
+                                                     </div>
+                                                     
+                                                     
                                                 </div>
                                              </div>
+                                             
+                                             
+                                                <!--<div style="display: flex; flex-direction: column; align-items: center;">-->
+                                                <!--    <h3>行った便通処置</h3>-->
+                                                <!--        <div style="display: flex; justify-content: center; align-items: center;">-->
+                                                <!--        </div>-->
+                                                <!--        <div style="display: flex; justify-content: center; align-items: center; margin-top: 10px;">-->
+                                                <!--            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />-->
+                                                <!--            <script src="https://kit.fontawesome.com/de653d534a.js" crossorigin="anonymous"></script>-->
+                                                <!--            <i class="fa-solid fa-eye-dropper text-cyan-400" id="help_digestion_1" style="font-size: 2em; padding: 0 5px; transition: transform 0.2s;"></i>-->
+                                                <!--            <input type="checkbox" name="help_digestion_1" id="help_digestion_1" value="浣腸"> 浣腸-->
+                                                            
+                                                <!--            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />-->
+                                                <!--            <script src="https://kit.fontawesome.com/de653d534a.js" crossorigin="anonymous"></script>-->
+                                                <!--            <i class="fa-solid fa-capsules text-indigo-400"  id="help_digestion_2" style="font-size: 2em; padding: 0 5px; transition: transform 0.2s;"></i>-->
+                                                <!--            <input type="checkbox" name="help_digestion_2" id="help_digestion_2" value="下剤"> 下剤-->
+                                                            
+                                                <!--            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />-->
+                                                <!--            <script src="https://kit.fontawesome.com/de653d534a.js" crossorigin="anonymous"></script>-->
+                                                <!--            <i class="fa-regular fa-hand-point-up text-red-300"  id="help_digestion_3" style="font-size: 2em; padding: 0 5px; transition: transform 0.2s;"></i>-->
+                                                <!--            <input type="checkbox" name="help_digestion_3" id="help_digestion_3" value="摘便"> 摘便（医療）-->
+                                                            
+                                                <!--        </div>-->
+                                                <!-- </div>-->
+                                                 
                                                 <style>
                                                   .checkbox-container {
                                                     display: flex;
@@ -488,26 +529,25 @@
                                             
                                              
                                               　<div style="display: flex; flex-direction: column; align-items: center; my-2;">
-                                                    <h3>便の色</h3>
-                                                    <div style="display: flex; justify-content: center; align-items: center;">
-                                                    </div>
-                                                    <div style="display: flex; justify-content: center; align-items: center; margin-top: 10px;">
-                                                        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
-                                                        <script src="https://kit.fontawesome.com/de653d534a.js" crossorigin="anonymous"></script>
-                                                       　<i class="fa-solid fa-circle text-gray-300" id="ben_color_1" style="font-size: 2em; padding: 0 5px; transition: transform 0.2s;"></i>
-                                                       　<input type="checkbox" name="ben_color_1" id="ben_color_1" value="白"> 白
-                                            
-                                                        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
-                                                        <script src="https://kit.fontawesome.com/de653d534a.js" crossorigin="anonymous"></script>
-                                                        <i class="fa-solid fa-circle text-amber-800" id="ben_color_2" style="font-size: 2em; padding: 0 5px; transition: transform 0.2s;"></i>
-                                                         <input type="checkbox" name="ben_color_2" id="ben_color_2" value="茶"> 茶
-                                                
-                                                        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
-                                                        <script src="https://kit.fontawesome.com/de653d534a.js" crossorigin="anonymous"></script>
-                                                        <i class="fa-solid fa-circle text-black" id="ben_color_3" style="font-size: 2em; padding: 0 5px; transition: transform 0.2s;"></i>
-                                                        <input type="checkbox" name="ben_color_3" id="ben_color_3" value="黒"> 黒
-                                                    </div>
+                                                    <p class="text-lg">便の量</p>
+                                                      <select name="ben_amount" class="w-3/5 mx-1">
+                                                        <option value="selected">選択</option>
+                                                        <option value="many">多</option>
+                                                        <option value="normal">普通</option>
+                                                        <option value="less">少</option>
+                                                      </select>
                                                 </div>
+                                                
+                                                <div style="display: flex; flex-direction: column; align-items: center; my-2;">
+                                                    <p class="text-lg">行った便通処置</p>
+                                                      <select name="bentsuu" class="w-3/5 mx-1">
+                                                        <option value="selected">選択</option>
+                                                        <option value="kanchou">浣腸</option>
+                                                        <option value="gezai">下剤</option>
+                                                        <option value="tekiben">摘便</option>
+                                                      </select>
+                                                </div>
+                                                
                                             　　<div style="display: flex; flex-direction: column; align-items: center;">
                                             　　<button type="submit" class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded-lg text-lg mr-4">
                                                    送信
@@ -628,25 +668,23 @@
                                             
                                              
                                               　<div style="display: flex; flex-direction: column; align-items: center; my-2;">
-                                                    <h3>便の色</h3>
-                                                    <div style="display: flex; justify-content: center; align-items: center;">
-                                                    </div>
-                                                    <div style="display: flex; justify-content: center; align-items: center; margin-top: 10px;">
-                                                        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
-                                                        <script src="https://kit.fontawesome.com/de653d534a.js" crossorigin="anonymous"></script>
-                                                       　<i class="fa-solid fa-circle text-gray-300" id="ben_color_1" style="font-size: 2em; padding: 0 5px; transition: transform 0.2s;"></i>
-                                                       　<input type="checkbox" name="ben_color_1" id="ben_color_1" value="白"> 白
-                                            
-                                                        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
-                                                        <script src="https://kit.fontawesome.com/de653d534a.js" crossorigin="anonymous"></script>
-                                                        <i class="fa-solid fa-circle text-amber-800" id="ben_color_2" style="font-size: 2em; padding: 0 5px; transition: transform 0.2s;"></i>
-                                                         <input type="checkbox" name="ben_color_2" id="ben_color_2" value="茶"> 茶
+                                                    <p class="text-lg">便の量</p>
+                                                      <select name="ben_amount" class="w-3/5 mx-1">
+                                                        <option value="selected">選択</option>
+                                                        <option value="many">多</option>
+                                                        <option value="normal">普通</option>
+                                                        <option value="less">少</option>
+                                                      </select>
+                                                </div>
                                                 
-                                                        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
-                                                        <script src="https://kit.fontawesome.com/de653d534a.js" crossorigin="anonymous"></script>
-                                                        <i class="fa-solid fa-circle text-black" id="ben_color_3" style="font-size: 2em; padding: 0 5px; transition: transform 0.2s;"></i>
-                                                        <input type="checkbox" name="ben_color_3" id="ben_color_3" value="黒"> 黒
-                                                    </div>
+                                                <div style="display: flex; flex-direction: column; align-items: center; my-2;">
+                                                    <p class="text-lg">行った便通処置</p>
+                                                      <select name="bentsuu" class="w-3/5 mx-1">
+                                                        <option value="selected">選択</option>
+                                                        <option value="kanchou">浣腸</option>
+                                                        <option value="gezai">下剤</option>
+                                                        <option value="tekiben">摘便</option>
+                                                      </select>
                                                 </div>
                                             　　<div style="display: flex; flex-direction: column; align-items: center;">
                                             　　<button type="submit" class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded-lg text-lg mr-4">
@@ -806,49 +844,41 @@
                                               <input type="checkbox" name="" id="" value="入浴中">入浴中 
                                             </div>
                                             
+                                            <div class="checkbox-container">
+                                              <input type="checkbox" name="" id="" value="その他">その他 
+                                            </div>
+                                            
                                             <input type="hidden" name="people_id" value="{{ $person->id }}">
-                                             <p>問題行動の前の様子</p>
+                                             <p>備考</p>
                                             <input name="" id="text-box" class="appearance-none block w-full text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white font-bold" type="text" placeholder="">
                                             
-                                            <p>問題行動が落ち着き始めた時</p>
+                                            <p>考えられる原因</p>
                                             
                                             <div class="checkbox-container">
-                                              <input type="checkbox" name="" id="" value="口腔ケア"> 口腔ケア
-                                            </div>
-                                            
-                                            <div class="checkbox-container">
-                                              <input type="checkbox" name="" id="" value="食事準備">食事準備 
+                                              <input type="checkbox" name="" id="" value="周囲の音"> 周囲の音
                                             </div>
                                             
                                             <div class="checkbox-container">
-                                              <input type="checkbox" name="" id="" value="食事中">食事中
+                                              <input type="checkbox" name="" id="" value="周囲の匂い">周囲の匂い 
                                             </div>
                                             
                                             <div class="checkbox-container">
-                                              <input type="checkbox" name="" id="" value="食事片付け">食事片付け
+                                              <input type="checkbox" name="" id="" value="周囲の景色">周囲の景色
                                             </div>
                                             
                                             <div class="checkbox-container">
-                                              <input type="checkbox" name="" id="" value="作業準備">作業準備
+                                              <input type="checkbox" name="" id="" value="職員による声かけ">職員による声かけ
                                             </div>
                                             
                                             <div class="checkbox-container">
-                                              <input type="checkbox" name="" id="" value="作業中">作業中
+                                              <input type="checkbox" name="" id="" value="他利用者とのやりとり">他利用者とのやりとり
                                             </div>
                                             
                                             <div class="checkbox-container">
-                                              <input type="checkbox" name="" id="" value="トイレ">トイレ 
+                                              <input type="checkbox" name="" id="" value="体調">体調
                                             </div>
                                             
-                                            <div class="checkbox-container">
-                                              <input type="checkbox" name="" id="" value="入浴準備">入浴準備 
-                                            </div>
-                                            
-                                             <div class="checkbox-container">
-                                              <input type="checkbox" name="" id="" value="入浴中">入浴中 
-                                            </div>
-                                            
-                                            
+                                        
                                             <p>備考</p>
                                             <input name="" id="text-box" class="appearance-none block w-full text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white font-bold" type="text" placeholder="">
                                             

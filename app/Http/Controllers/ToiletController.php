@@ -59,6 +59,8 @@ class ToiletController extends Controller
         'ben_one' => $request->ben_one,
         'ben_two' => $request->ben_two,
         'ben_three' => $request->ben_three,
+        'ben_amount' => $request->ben_amount,
+        'bentsuu' => $request->bentsuu,
         'filename' => $request->filename,
         'bikou' => $request->bikou,
          

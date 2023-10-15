@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class RenameCarAndAddCarEveningToCarTable extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,9 @@ class RenameCarAndAddCarEveningToCarTable extends Migration
      */
     public function up()
     {
-        Schema::table('car', function (Blueprint $table) {
-            // ここにカラムの変更や追加を定義する
-        $table->renameColumn('car', 'car_morning');
-        $table->string('car_evening')->nullable();
+        Schema::table('toilets', function (Blueprint $table) {
+            $table->string('ben_amount')->nullable()->change();
+            $table->string('bentsuu')->nullable()->change();
         });
     }
 
@@ -27,7 +26,7 @@ class RenameCarAndAddCarEveningToCarTable extends Migration
      */
     public function down()
     {
-        Schema::table('car', function (Blueprint $table) {
+        Schema::table('ben_amount_and_bentsuu_columns_in_toilets', function (Blueprint $table) {
             //
         });
     }

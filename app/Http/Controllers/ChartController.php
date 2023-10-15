@@ -72,24 +72,50 @@ class ChartController extends Controller
     return $date->format('Y-m-d H:i:s'); // 任意のフォーマットに合わせて変更可能
     })->toArray();
     $data = $temperatures->pluck('temperature')->toArray();
-  // デバッグ情報を表示
-    // dd($labels, $data);
+ 
 
-    // ビューにデータを渡す
+    $toilets = Toilet::where('people_id', $people_id)
+    ->whereNotNull('created_at') // null 値を持つレコードを除外
+    ->get();
+    
+   
+    $toilet_labels = $toilets->pluck('created_at')->map(function ($date) {
+    return $date->format('Y-m-d H:i:s'); // 任意のフォーマットに合わせて変更可能
+    })->toArray();
+    $ben_data = $toilets->pluck('ben_amount')->toArray();
+    
+    $chartData = [
+    'labels' => $toilet_labels,
+    'benData' => [] // '多' と '少' カテゴリーのデータ
+];
+
+// foreach ($ben_data as $value) {
+//     if ($value === '多') {
+//         $chartData['benData'][] = 1.5; // '多' カテゴリーに対応する数値
+//     } elseif ($value === '普通') {
+//         $chartData['benData'][] = 1.0; // '少' カテゴリーに対応する数値
+//     } elseif ($value === '少') {
+//         $chartData['benData'][] = 0.5; // '少' カテゴリーに対応する数値
+//     } else {
+//         $chartData['benData'][] = null; // その他の場合には null を設定
+//     }
+// }
+ 
+
+
+    // ビューにデータを渡す（ここでまとめてviewに渡す）
     return view('chartedit', [
-        'labels' => $labels,
-        'data' => $data,
-        'person' => $person,
-    ]);
-    // record.blade.phpの内容↓
-    // $person = Person::findOrFail($people_id);
-    // $temperatures = Temperature::where('people_id', $people_id)->get();
-    // $toilets = Toilet::where('people_id', $people_id)->get();
-    // $foods = Food::where('people_id', $people_id)->get();
-    // $speeches = Speech::where('people_id', $people_id)->get();
-
-    // return view('chartedit', compact('person', 'temperatures', 'toilets', 'foods', 'speeches'));
+    'labels' => $labels,
+    'data' => $data,
+    'person' => $person,
+    'chartData' => $chartData,  // この行を追加
+    'toilet_labels' => $toilet_labels, // 'toilet_labels' をビューに渡す
+    'ben_data' => $ben_data, // 'ben_data' をビューに渡す
+]);
+   
 }
+   
+
 
 
     /**
