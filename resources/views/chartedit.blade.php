@@ -39,7 +39,22 @@
     　　<div>
             <!--json_encode 関数を使用-->
             <!--PHPの変数 $labels と $data がJSON形式でJavaScriptに渡される↓-->
-           <canvas id="benChart" data-ben-labels="{{ json_encode($toilet_labels) }}" data-ben-data="{{ json_encode($ben_data) }}"></canvas>
+           <canvas id="benChart" data-ben-labels="{{ json_encode($toilet_labels) }}" data-ben-data="{{ json_encode($ben_data) }}" data-ben-bentsuu="{{ json_encode($bentsuu) }}"></canvas>
+
+        </div>
+        <div>
+            <!--json_encode 関数を使用-->
+            <!--PHPの変数 $labels と $data がJSON形式でJavaScriptに渡される↓-->
+           
+           
+　　　　　 <canvas id="benConditionChart"  data-ben-labels="{{ json_encode($toilet_labels) }}" data-ben-condition="{{ json_encode($ben_condition) }}"></canvas>
+
+
+        </div>
+        　<div>
+            <!--json_encode 関数を使用-->
+            <!--PHPの変数 $labels と $data がJSON形式でJavaScriptに渡される↓-->
+           <canvas id="foodChart" data-food-labels="{{ json_encode($food_labels) }}" data-staple_food="{{ json_encode($staple_food) }}" data-side_dish="{{ json_encode($side_dish) }}"></canvas>
 
         </div>
          
@@ -49,11 +64,14 @@
   </body>
   
   　<script>
-       
+    //   console.log(data-ben-condition);
+
+
         
         var toiletLabels = @json($toilet_labels);
     var benData = @json($ben_data);
-  var chartData = @json($chartData);
+
+  var benCondition = @json($ben_condition);
     
     </script>
     

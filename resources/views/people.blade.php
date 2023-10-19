@@ -404,10 +404,12 @@
                                         
                                             @if ($lastToilets === null || $lastToilets->created_at->diffInHours(now()) >= 6)
                                             
+                                            
                                             <details>
                                                 
                                               <summary class="text-red-500 font-bold text-xl">誘導してください
                                               <p class="text-red-500 font-bold text-xl">未排便{{ $lastToilets ? $lastToilets->created_at->diffInDays(now()) : 0 }}日目</p>
+
                                               </summary>
                                               <form action="{{ route('toilet.store', $person->id) }}" method="POST">
                                                 @csrf
@@ -464,59 +466,29 @@
                                             
                                             <div style="display: flex; flex-direction: column; align-items: center;">
                                               <h3>便</h3>
-                                                <div style="max-width: 300px;">
-                                                    <div class="checkbox-container">
-                                                        <input type="checkbox" name="ben_one" id="ben_one" value="コロコロ便">コロコロ便
-                                                  　</div>
-                                                    <div class="checkbox-container">
-                                                        <input type="checkbox" name="ben_two" id="ben_two" value="やや硬い便"> やや硬い便
-                                                    </div>
-                                                    <div class="checkbox-container">
-                                                        <input type="checkbox" name="ben_three" id="ben_three" value="普通便"> 普通便
-                                                     </div>
-                                                     
-                                                     <!--下記やわらかい便/泥状便/水様便の追加データベース必要↓-->
-                                                    
-                                                     <div class="checkbox-container">
-                                                        <input type="checkbox" name="ben_four" id="ben_four" value="やや軟らかい便"> やややわらかい便
-                                                     </div>
-                                                     
-                                                     <div class="checkbox-container">
-                                                        <input type="checkbox" name="ben_five" id="ben_five" value="泥状便"> 泥状便
-                                                     </div>
-                                                     
-                                                     <div class="checkbox-container">
-                                                        <input type="checkbox" name="ben_six" id="ben_six" value="水様便"> 水様便
-                                                     </div>
-                                                     
-                                                     
+                                                <!--<div style="max-width: 300px;">-->
+                                                <!--    <div class="checkbox-container">-->
+                                                <!--        <input type="checkbox" name="ben_one" id="ben_one" value="トイレ">トイレ-->
+                                                <!--  　</div>-->
+                                                <!--    <div class="checkbox-container">-->
+                                                <!--        <input type="checkbox" name="ben_two" id="ben_two" value="おむつ"> おむつ-->
+                                                <!--    </div>-->
+                                                <!--    <div class="checkbox-container">-->
+                                                <!--        <input type="checkbox" name="ben_three" id="ben_three" value="付着あり"> 付着あり-->
+                                                <!--     </div>-->
+                                                <!--</div>-->
+                                                <div style="display: flex; flex-direction: column; align-items: center; my-2;">
+                                                    <p class="text-lg">便の状態</p>
+                                                      <select name="ben_condition" class="w-3/5 mx-1">
+                                                        <option value="selected">選択</option>
+                                                        <option value="硬便">硬便</option>
+                                                        <option value="普通便">普通便</option>
+                                                        <option value="軟便">軟便</option>
+                                                        <option value="泥状便">泥状便</option>
+                                                        <option value="水様便">水様便</option>
+                                                      </select>
                                                 </div>
                                              </div>
-                                             
-                                             
-                                                <!--<div style="display: flex; flex-direction: column; align-items: center;">-->
-                                                <!--    <h3>行った便通処置</h3>-->
-                                                <!--        <div style="display: flex; justify-content: center; align-items: center;">-->
-                                                <!--        </div>-->
-                                                <!--        <div style="display: flex; justify-content: center; align-items: center; margin-top: 10px;">-->
-                                                <!--            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />-->
-                                                <!--            <script src="https://kit.fontawesome.com/de653d534a.js" crossorigin="anonymous"></script>-->
-                                                <!--            <i class="fa-solid fa-eye-dropper text-cyan-400" id="help_digestion_1" style="font-size: 2em; padding: 0 5px; transition: transform 0.2s;"></i>-->
-                                                <!--            <input type="checkbox" name="help_digestion_1" id="help_digestion_1" value="浣腸"> 浣腸-->
-                                                            
-                                                <!--            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />-->
-                                                <!--            <script src="https://kit.fontawesome.com/de653d534a.js" crossorigin="anonymous"></script>-->
-                                                <!--            <i class="fa-solid fa-capsules text-indigo-400"  id="help_digestion_2" style="font-size: 2em; padding: 0 5px; transition: transform 0.2s;"></i>-->
-                                                <!--            <input type="checkbox" name="help_digestion_2" id="help_digestion_2" value="下剤"> 下剤-->
-                                                            
-                                                <!--            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />-->
-                                                <!--            <script src="https://kit.fontawesome.com/de653d534a.js" crossorigin="anonymous"></script>-->
-                                                <!--            <i class="fa-regular fa-hand-point-up text-red-300"  id="help_digestion_3" style="font-size: 2em; padding: 0 5px; transition: transform 0.2s;"></i>-->
-                                                <!--            <input type="checkbox" name="help_digestion_3" id="help_digestion_3" value="摘便"> 摘便（医療）-->
-                                                            
-                                                <!--        </div>-->
-                                                <!-- </div>-->
-                                                 
                                                 <style>
                                                   .checkbox-container {
                                                     display: flex;
@@ -548,6 +520,10 @@
                                                       </select>
                                                 </div>
                                                 
+                                                <div style="display: flex; flex-direction: column; align-items: center; my-2;">
+                                                    <input type="datetime-local" name="created_at">
+                                                </div>
+                                                
                                             　　<div style="display: flex; flex-direction: column; align-items: center;">
                                             　　<button type="submit" class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded-lg text-lg mr-4">
                                                    送信
@@ -570,18 +546,13 @@
                                                   @endif
                                                 </div>
                                                 @endif
-                                                  @if($lastToilets->ben_one || $lastToilets->ben_two || $lastToilets->ben_three)
+                                                  @if($lastToilets->ben_condition)
                                                    <div class="mx-1.5">
                                                     <p class="text-gray-900 font-bold text-sm">便</p>
-                                                    @if($lastToilets->ben_one)
-                                                    <a href="{{ route('toilets.show', $lastToilets->id) }}" class="text-gray-900 font-bold text-xl">{{ $lastToilets->ben_one }}</a>
+                                                    @if($lastToilets->ben_condition)
+                                                    <a href="{{ route('toilets.show', $lastToilets->id) }}" class="text-gray-900 font-bold text-xl">{{ $lastToilets->ben_condition }}</a>
                                                     @endif
-                                                    @if($lastToilets->ben_two)
-                                                    <a href="{{ route('toilets.show', $lastToilets->id) }}" class="text-gray-900 font-bold text-xl">{{ $lastToilets->ben_two }}</a>
-                                                    @endif
-                                                    @if($lastToilets->ben_three)
-                                                    <a href="{{ route('toilets.show', $lastToilets->id) }}" class="text-gray-900 font-bold text-xl">{{ $lastToilets->ben_three }}</a>
-                                                    @endif
+                                                    
                                                    </div>
                                                 　@endif
                                             　@endif
@@ -644,16 +615,27 @@
                                             
                                             <div style="display: flex; flex-direction: column; align-items: center;">
                                               <h3>便</h3>
-                                                <div style="max-width: 300px;">
-                                                    <div class="checkbox-container">
-                                                        <input type="checkbox" name="ben_one" id="ben_one" value="トイレ">トイレ
-                                                  　</div>
-                                                    <div class="checkbox-container">
-                                                        <input type="checkbox" name="ben_two" id="ben_two" value="おむつ"> おむつ
-                                                    </div>
-                                                    <div class="checkbox-container">
-                                                        <input type="checkbox" name="ben_three" id="ben_three" value="付着あり"> 付着あり
-                                                     </div>
+                                                <!--<div style="max-width: 300px;">-->
+                                                <!--    <div class="checkbox-container">-->
+                                                <!--        <input type="checkbox" name="ben_one" id="ben_one" value="トイレ">トイレ-->
+                                                <!--  　</div>-->
+                                                <!--    <div class="checkbox-container">-->
+                                                <!--        <input type="checkbox" name="ben_two" id="ben_two" value="おむつ"> おむつ-->
+                                                <!--    </div>-->
+                                                <!--    <div class="checkbox-container">-->
+                                                <!--        <input type="checkbox" name="ben_three" id="ben_three" value="付着あり"> 付着あり-->
+                                                <!--     </div>-->
+                                                <!--</div>-->
+                                                <div style="display: flex; flex-direction: column; align-items: center; my-2;">
+                                                    <p class="text-lg">便の状態</p>
+                                                      <select name="ben_condition" class="w-3/5 mx-1">
+                                                        <option value="selected">選択</option>
+                                                        <option value="硬便">硬便</option>
+                                                        <option value="普通便">普通便</option>
+                                                        <option value="軟便">軟便</option>
+                                                        <option value="泥状便">泥状便</option>
+                                                        <option value="水様便">水様便</option>
+                                                      </select>
                                                 </div>
                                              </div>
                                                 <style>
@@ -686,6 +668,11 @@
                                                         <option value="tekiben">摘便</option>
                                                       </select>
                                                 </div>
+                                                
+                                                <div style="display: flex; flex-direction: column; align-items: center; my-2;">
+                                                    <input type="datetime-local" name="created_at">
+                                                </div>
+                                                
                                             　　<div style="display: flex; flex-direction: column; align-items: center;">
                                             　　<button type="submit" class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded-lg text-lg mr-4">
                                                    送信

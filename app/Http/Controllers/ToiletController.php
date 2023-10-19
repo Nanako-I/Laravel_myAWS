@@ -56,11 +56,12 @@ class ToiletController extends Controller
         'urine_one' => $request->input('urine_one'), // チェックボックスの値ではなく、テキスト入力フィールドの値を保存
         'urine_two' => $request->urine_two,
         'urine_three' => $request->urine_three,
-        'ben_one' => $request->ben_one,
-        'ben_two' => $request->ben_two,
-        'ben_three' => $request->ben_three,
+       
+        
+        'ben_condition' => $request->ben_condition,
         'ben_amount' => $request->ben_amount,
         'bentsuu' => $request->bentsuu,
+        'created_at' => $request->created_at,
         'filename' => $request->filename,
         'bikou' => $request->bikou,
          

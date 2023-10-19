@@ -123,8 +123,8 @@ Route::get('people/{id}/edit', [PersonController::class, 'edit'])->name('people.
 
 Route::get('/download',[SpreadsheetController::class,'chart'])->name('chart');
 
-Route::resource('upload',UploadController::class);
-// Route::delete('/delete/{fileName}', 'UploadController@deleteFile');
+Route::resource('/upload',UploadController::class);
+
 Route::delete('/delete/{fileName}', function ($fileName) {
     // ファイルを削除
     Storage::delete('public/' . $fileName);
@@ -132,8 +132,8 @@ Route::delete('/delete/{fileName}', function ($fileName) {
     return response()->json(['message' => 'ファイルが削除されました']);
 });
 
-Route::post('/read-pdf', 'PdfController@readPdf');
-
+// Route::post('/read-pdf', 'UploadController@readPdf');
+Route::post('/upload', [UploadController::class, 'store'])->name('upload.edit');
 Route::get('chart/{id}/edit', [ChartController::class, 'show'])->name('chart.edit');
 
 

@@ -61,59 +61,53 @@ class ChartController extends Controller
     $person = Person::findOrFail($people_id);
     
     $temperatures = Temperature::where('people_id', $people_id)
-    ->whereNotNull('created_at') // null 値を持つレコードを除外
-    ->get();
-    // dd($temperatures);
+        ->whereNotNull('created_at') // null 値を持つレコードを除外
+        ->get();
     
     // データをChart.jsのデータフォーマットに変換
-    // $labels = $temperatures->pluck('date'); // 体温データの日付をラベルにする
-    // $data = $temperatures->pluck('temperature'); // 体温データをデータポイントにする
     $labels = $temperatures->pluck('created_at')->map(function ($date) {
-    return $date->format('Y-m-d H:i:s'); // 任意のフォーマットに合わせて変更可能
+        return $date->format('Y-m-d H:i:s'); // 任意のフォーマットに合わせて変更可能
     })->toArray();
+    
     $data = $temperatures->pluck('temperature')->toArray();
- 
+    
+    $foods = Food::where('people_id', $people_id)
+        ->whereNotNull('created_at') // null 値を持つレコードを除外
+        ->get();
+    
+    $food_labels = $foods->pluck('created_at')->map(function ($date) {
+        return $date->format('Y-m-d H:i:s'); // 任意のフォーマットに合わせて変更可能
+    })->toArray();
+    $staple_food = $foods->pluck('staple_food')->toArray();
+    $side_dish = $foods->pluck('side_dish')->toArray();
 
     $toilets = Toilet::where('people_id', $people_id)
-    ->whereNotNull('created_at') // null 値を持つレコードを除外
-    ->get();
+        ->whereNotNull('created_at') // null 値を持つレコードを除外
+        ->get();
     
-   
     $toilet_labels = $toilets->pluck('created_at')->map(function ($date) {
-    return $date->format('Y-m-d H:i:s'); // 任意のフォーマットに合わせて変更可能
+        return $date->format('Y-m-d H:i:s'); // 任意のフォーマットに合わせて変更可能
     })->toArray();
-    $ben_data = $toilets->pluck('ben_amount')->toArray();
     
-    $chartData = [
-    'labels' => $toilet_labels,
-    'benData' => [] // '多' と '少' カテゴリーのデータ
-];
+    $ben_data = $toilets->pluck('ben_amount')->toArray();
+    $bentsuu = $toilets->pluck('bentsuu')->toArray();
+    $ben_condition = $toilets->pluck('ben_condition')->toArray();
 
-// foreach ($ben_data as $value) {
-//     if ($value === '多') {
-//         $chartData['benData'][] = 1.5; // '多' カテゴリーに対応する数値
-//     } elseif ($value === '普通') {
-//         $chartData['benData'][] = 1.0; // '少' カテゴリーに対応する数値
-//     } elseif ($value === '少') {
-//         $chartData['benData'][] = 0.5; // '少' カテゴリーに対応する数値
-//     } else {
-//         $chartData['benData'][] = null; // その他の場合には null を設定
-//     }
-// }
- 
-
-
-    // ビューにデータを渡す（ここでまとめてviewに渡す）
     return view('chartedit', [
-    'labels' => $labels,
-    'data' => $data,
-    'person' => $person,
-    'chartData' => $chartData,  // この行を追加
-    'toilet_labels' => $toilet_labels, // 'toilet_labels' をビューに渡す
-    'ben_data' => $ben_data, // 'ben_data' をビューに渡す
-]);
-   
+        'labels' => $labels,
+        'data' => $data,
+        'person' => $person,
+        'food_labels' => $food_labels,
+        'staple_food' => $staple_food,
+        'side_dish' => $side_dish,
+        
+        'toilet_labels' => $toilet_labels,
+        'ben_data' => $ben_data,
+        'bentsuu' => $bentsuu,
+        'ben_condition' => $ben_condition,
+    ]);
 }
+
    
 
 

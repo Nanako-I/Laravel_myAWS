@@ -26,6 +26,7 @@ return new class extends Migration
             $table->string('ben_three')->nullable();
             $table->string('filename')->nullable();
             $table->string('bikou')->nullable();
+            // $table->timestamp('created_at')->nullable(false);
             $table->timestamps();
         });
         }

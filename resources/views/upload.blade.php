@@ -9,12 +9,14 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   </head>
   <body>
-    <form method="POST" action="/read-pdf" enctype="multipart/form-data">
+    <form method="POST" action="/upload" enctype="multipart/form-data">
+      <form action="{{ url('/read-pdf') }}" method="POST" class="w-full" enctype="multipart/form-data">
       {{ csrf_field() }}
 
       <input type="file" id="file" name="file" class="form-control" >
 
       <button type="submit">アップロード</button>
+      @csrf
     </form>
     
     @foreach($files as $file)
@@ -25,7 +27,7 @@
     @endforeach
     
     <form id="pdfForm" enctype="multipart/form-data">
-      <input type="file" id="file" name="file" class="form-control">
+      <!--<input type="file" id="file" name="file" class="form-control">-->
       <button type="button" id="readButton">文字を読み取る</button>
     </form>
 

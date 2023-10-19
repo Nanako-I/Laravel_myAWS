@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\Upload;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -12,6 +13,7 @@ use Google\Cloud\Vision\V1\ImageAnnotatorClient;
 class UploadController extends Controller
 {
     public function index(){
+         
         
          // スキャンするディレクトリのパスを指定↓-->
     $directory = storage_path('app/public');
@@ -24,6 +26,13 @@ class UploadController extends Controller
     	return view('upload', compact('files'));
     }
     public function store(Request $request){
+        
+        $request->validate([
+            'file' => 'required|file'
+
+        // 'file' => 'required|file|mimes:pdf', // ここでバリデーションルールを設定（PDFファイルしか許容しない場合）
+    ]);
+    
     if ($request->hasFile('file')) {
         // ファイル名をそのままで保存
         $file_name = $request->file('file')->getClientOriginalName();
