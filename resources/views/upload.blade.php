@@ -22,7 +22,13 @@
     @foreach($files as $file)
       <div>
           <a href="{{ asset('storage/' . $file) }}">{{ $file }}</a>
-          <i class="fa-solid fa-trash-can text-gray-600" style="padding: 0 5px; cursor: pointer;" data-file="{{ $file }}"></i>
+          
+          <form action="{{ url('/delete/' . $file) }}" method="POST" class="w-full">
+          @method('DELETE') <!-- メソッドをDELETEに設定 -->
+          @csrf
+          <button type="submit" class="fa-solid fa-trash-can text-gray-600" style="padding: 0 5px; cursor: pointer;" data-file="{{ $file }}">削除</button>
+          
+          </form>
       </div>
     @endforeach
     
@@ -34,6 +40,7 @@
 
     <script>
       // ゴミ箱アイコンをクリックしたときの処理
+      
      document.addEventListener('DOMContentLoaded', function () {
     var trashIcons = document.querySelectorAll('.fa-trash-can');
     trashIcons.forEach(function (icon) {
@@ -46,10 +53,10 @@
 
       // ファイルを削除するためのAjaxリクエストを送信
       var xhr = new XMLHttpRequest();
-      xhr.open('DELETE', '/delete/' + fileName, true);
-
-      // CSRFトークンをリクエストヘッダーに設定
+      xhr.open('POST', '/delete/' + fileName, true);
       xhr.setRequestHeader('X-CSRF-TOKEN', csrfToken);
+      xhr.setRequestHeader('X-HTTP-Method-Override', 'DELETE'); // DELETEメソッドを設定
+
 
       xhr.onload = function () {
         if (xhr.status === 200) {

@@ -77,7 +77,7 @@ class ChartController extends Controller
     
     $food_labels = $foods->pluck('created_at')->map(function ($date) {
         return $date->format('Y-m-d H:i:s'); // 任意のフォーマットに合わせて変更可能
-    })->toArray();
+        })->toArray();
     $staple_food = $foods->pluck('staple_food')->toArray();
     $side_dish = $foods->pluck('side_dish')->toArray();
 
@@ -87,11 +87,14 @@ class ChartController extends Controller
     
     $toilet_labels = $toilets->pluck('created_at')->map(function ($date) {
         return $date->format('Y-m-d H:i:s'); // 任意のフォーマットに合わせて変更可能
-    })->toArray();
+        })->toArray();
     
     $ben_data = $toilets->pluck('ben_amount')->toArray();
     $bentsuu = $toilets->pluck('bentsuu')->toArray();
-    $ben_condition = $toilets->pluck('ben_condition')->toArray();
+    $ben_condition = $toilets->groupBy('ben_condition');
+    
+    // $ben_condition = $toilets->groupBy('ben_condition')->pluck('ben_condition')->toArray();
+
 
     return view('chartedit', [
         'labels' => $labels,
@@ -106,8 +109,16 @@ class ChartController extends Controller
         'bentsuu' => $bentsuu,
         'ben_condition' => $ben_condition,
     ]);
+    
+    
 }
+// public function years() { // 👈 追加
 
+//         return \App\Sale::select('year')
+//             ->groupBy('year')
+//             ->pluck('year');
+
+//     }
    
 
 

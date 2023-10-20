@@ -34,9 +34,19 @@ class UploadController extends Controller
     ]);
     
     if ($request->hasFile('file')) {
+        $uploadedFile = $request->file('file');
         // ファイル名をそのままで保存
-        $file_name = $request->file('file')->getClientOriginalName();
-        $request->file('file')->storeAs('public', $file_name);
+        // $file_name = $request->file('file')->getClientOriginalName();
+        // $request->file('file')->storeAs('public', $file_name);
+        $file_name = $uploadedFile->getClientOriginalName();
+        $uploadedFile->storeAs('public', $file_name);
+
+        // ファイル情報をデータベースに保存
+        $upload = new Upload();
+        $upload->file_name = $file_name;
+        $upload->file_path = 'storage/' . $file_name; // ファイルの保存パスに注意
+        $upload->save();
+
 
         // アップロード成功時の処理
         return redirect('upload')->with('success', 'ファイルがアップロードされました');
@@ -66,6 +76,7 @@ class UploadController extends Controller
     
         public function deleteFile($file_name)
         {
+            Uploads::where('file_name', $file_name)->delete();
             // ファイルを削除
             Storage::delete('public/' . $file_name);
         

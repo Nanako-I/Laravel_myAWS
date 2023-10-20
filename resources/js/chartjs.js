@@ -171,6 +171,7 @@ const bentsuuLabels = bentsuuData.map(value => {
   } else {
     return null;
   }
+  
 });
 
 
@@ -224,137 +225,74 @@ if (benchartLabels && convertedData) {
 }
 import { Chart5 } from 'chart.js/auto';
     
-//   const ctx5 = document.getElementById("benConditionChart").getContext("2d");
-    // const benConditionChartElement = document.getElementById("benConditionChart");
-    
-    // JSON.parse は、JavaScriptでJSON形式の文字列をJavaScriptオブジェクトに変換するための組み込みの関数↓
-    // const benConditionLabels = JSON.parse(benConditionChartElement.getAttribute("data-ben-labels"));
-    // const benchartData = JSON.parse(benChartElement.getAttribute("data-ben-data"));
-    // const benConditionData = JSON.parse(benConditionChartElement.getAttribute("data-ben_condition"));
-   
-//  document.addEventListener("DOMContentLoaded", function() {
+ document.addEventListener("DOMContentLoaded", function() {
      const ctx5 = document.getElementById("benConditionChart").getContext("2d");
-    // ここにJavaScriptコードを配置
-    // const benConditionChartElement = document.getElementById("benConditionChart");
-    //  const benchartLabels = JSON.parse(benConditionChartElement.getAttribute("data-ben-labels"));
-    // const benConditionData = JSON.parse(benConditionChartElement.getAttribute("data-ben_condition"));
    
     // JSON.parse は、JavaScriptでJSON形式の文字列をJavaScriptオブジェクトに変換するための組み込みの関数↓
     // const benchartData = JSON.parse(benChartElement.getAttribute("data-ben-data"));
-  
-    
-    
     const benConditionChartElement = document.getElementById("benConditionChart");
+    const benLabelData = JSON.parse(benConditionChartElement.getAttribute("data-ben-labels"));
+    const benConditionData = JSON.parse(benConditionChartElement.getAttribute("data-ben-condition"));
+   alert(benConditionData['普通便'].length);
     
-     const benLabelData = JSON.parse(benConditionChartElement.getAttribute("data-ben-labels"));
-// const benLabelData = benConditionChartElement.getAttribute("data-ben-labels");
-const benConditionData = JSON.parse(benConditionChartElement.getAttribute("data-ben-condition"));
-// const benConditionData = benConditionChartElement.getAttribute("data-ben-condition");
-
+    // const benConditionData = benConditionChartElement.getAttribute("data-ben-condition");
     // const benConditionDataJSON = benConditionChartElement.getAttribute("data-ben-condition");
-    // var benConditionDataJSON = <?php echo json_encode($ben_condition); ?>;
-   
-    //  const benJSONData = JSON.parse(benConditionDataJSON);
+    // const benJSONData = JSON.parse(benConditionDataJSON);
     // const decodedLabelData = benLabelData.replace(/&quot;/g, '"');
     // const decodedLabelCondition = benConditionData.replace(/&quot;/g, '"');
     
-// const decodedConditionData = benConditionData.replace(/&quot;/g, '"')
-
     // benConditionData を JSON パースして配列に変換
     // const benConditionArray = JSON.parse(decodedLabelCondition);
     // その他の処理
-// 例: データベースからデータを取得
-// if (Array.isArray(benJSONData)) {
+    // 例: データベースからデータを取得
+    // if (Array.isArray(benJSONData)) {
   // `benJSONData` が配列であることを確認
-//   const dataColors = [];
-//   const conditionLabels = [];
 
-  // ここで `benJSONData` を使用してデータを処理
-//   benJSONData.forEach(dataPoint => {
 
-//       if (dataPoint === '硬便') {
-//         conditionLabels.push('硬便');
-//         dataColors.push('rgb(255, 99, 132)');
-//       } else if (dataPoint === '普通便') {
-//         conditionLabels.push('普通便');
-//         dataColors.push('rgb(255, 205, 86)');
-//       } else if (dataPoint === '軟便') {
-//         conditionLabels.push('軟便');
-//         dataColors.push('rgb(75, 192, 192)');
-//       } else if (dataPoint === '泥状便') {
-//         conditionLabels.push('泥状便');
-//         dataColors.push('rgb(255, 159, 64)');
-//       } else if (dataPoint === '水様便') {
-//         conditionLabels.push('水様便');
-//         dataColors.push('rgb(54, 162, 235)');
-//       } else {
-//   console.error("benJSONData is not an array");
-// }
-//     });
-
-const benConditionLabels = benConditionData.map(value => {
-  if (value === '硬便') {
-    return '硬便';
-  } else if (value === '普通便') {
-    return '普通便';
-  } else if (value === '軟便') {
-    return '軟便';
-  } else if (value === '泥状便') {
-    return '泥状便';
-  } else if (value === '水様便') {
-    return '水様便'; 
-  } else if (value === 'kouben') {
-    return 'kouben';
-  } else {
-    return null;
-  }
-});
+   const benConditionLabels = Object.keys(benConditionData);
+// const benConditionLabels = benConditionData.map(value => {
+//   if (value === '硬便') {
+//     return '硬便';
+//   } else if (value === '普通便') {
+//     return '普通便';
+//   } else if (value === '軟便') {
+//     return '軟便';
+//   } else if (value === '泥状便') {
+//     return '泥状便';
+//   } else if (value === '水様便') {
+//     return '水様便'; 
+//   } else if (value === 'kouben') {
+//     return 'kouben';
+//   } else {
+//     return null;
+//   }
+// });
 
 
 
 if (benLabelData && benConditionData) {
-    
-
-//   const ConditionData = {
-//     labels: benchartLabels, // bentsuu の日本語表記をX軸に表示
-    
-//         datasets: [
-//             {
-//                 label: '便の状態',
-//                 data: benConditionData,
-//                 backgroundColor: dataColors,
-//                 // backgroundColor: ['rgb(255, 99, 132)',
-//                 //                             'rgb(255, 159, 64)',
-//                 //                             'rgb(255, 205, 86)',
-//                 //                             'rgb(75, 192, 192)',
-//                 //                             'rgb(54, 162, 235)',
-//                 //                             'rgb(153, 102, 255)',
-//                 //                             'rgb(201, 203, 207)'
-//                 //     ],
-//                 borderColor: 'rgba(75, 192, 192, 1)',
-//                 borderWidth: 1
-//             },
-            
-            
-           
-//         ]
-//     };
-
-const ConditionData = {
+     // {"普通便":[1,2,3,4,5],"硬便":[1,2,3,4,5],"軟便":[1,2,3,4,5]}のobjectだけを取る
+    const l= Object.values(benConditionData);
+   
+    const l_count = l.map(condition =>condition.length);
+    // 二重配列をmapする　配列を一つひとつ0番目、condition＝配列
+   const ConditionData = {
       labels: benConditionLabels,  // 各データポイントに対するラベル
+  
+    //   data: l,//Array(benConditionData.length).fill(1),  
       datasets: [
         {
-          label: '便の状態',
-          data: Array(benConditionData.length).fill(1),  // 各データポイントの値（1として表示）
+        //   label:[ '硬便','普通便','軟便','泥状便','水様便'],
+          data: l_count,  // 各データポイントの値（1として表示）
         // data:benConditionData,
           backgroundColor: ['rgb(255, 99, 132)',
-                                            'rgb(255, 159, 64)',
-                                            'rgb(255, 205, 86)',
-                                            'rgb(75, 192, 192)',
-                                            'rgb(54, 162, 235)',
-                                            'rgb(153, 102, 255)',
-                                            'rgb(201, 203, 207)'
-                    ],
+                            'rgb(255, 159, 64)',
+                            'rgb(255, 205, 86)',
+                            'rgb(75, 192, 192)',
+                            'rgb(54, 162, 235)',
+                            'rgb(153, 102, 255)',
+                             'rgb(201, 203, 207)'
+                           ],
           borderColor: 'rgba(75, 192, 192, 1)',
           borderWidth: 1
         }
@@ -376,7 +314,7 @@ const ConditionData = {
 
     var benConditionChart = new Chart(ctx5, conditionconfig);
 }
-// });
+});
 import { Chart6 } from 'chart.js/auto';
     const ctx6 = document.getElementById("foodChart").getContext("2d");
     const foodchartElement = document.getElementById("foodChart");
