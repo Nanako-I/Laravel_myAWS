@@ -135,7 +135,7 @@ Route::delete('/delete/{fileName}', function ($fileName) {
 // Route::post('/read-pdf', 'UploadController@readPdf');
 Route::post('/upload', [UploadController::class, 'store'])->name('upload.edit');
 Route::get('chart/{id}/edit', [ChartController::class, 'show'])->name('chart.edit');
-
+// Route::get('food/{people_id}/edit', [FoodController::class, 'edit'])->name('food.edit');
 
 Route::get('/chartjs', function () {
     return view('chartjs');

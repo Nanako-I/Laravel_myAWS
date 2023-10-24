@@ -21,7 +21,7 @@
                 <div class="shrink-0 flex items-center">
                     <a href="{{ route('dashboard') }}">
                         <!--<x-application-logo class="block h-9 w-auto fill-current text-gray-800 dark:text-gray-200" />-->
-                        <img src="{{ asset('storage/sample/favicon.ico.png') }}" width ="60" height="60">
+                        <img src="{{ asset('storage/sample/heart_silver.png') }}" width ="60" height="60">
                     </a>
                 </div>
 
@@ -32,7 +32,7 @@
                     </x-nav-link>
                 </div>
                 
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex {{ request()->is('people') ? ' text-black' : '' }} px-4 py-2 rounded-md text-xl font-bold max-w-4xl">
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex {{ request()->is('people') ?  ' text-black' : '' }} px-4 py-2 rounded-md text-3xl font-bold max-w-4xl text-black">
                      
                      <x-nav-link :href="url('people')" :active="request()->is('people')">
                     {{ __('利用者一覧') }}

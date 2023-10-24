@@ -1,86 +1,96 @@
 // import Chart from "chart.js/auto";
 import { Chart } from 'chart.js/auto';
+Chart.defaults.font.size = 20; // デフォルトのフォントサイズを設定
+Chart.defaults.font.color = 'rgb(0, 0, 0)'; // デフォルトのフォントカラーを設定
 
-const ctx = document.getElementById("myChart").getContext("2d");
-const myChart2 =  {
-    type: "bar",
-    data: {
-        labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
-        datasets: [
-            {
-                label: "# of Votes",
-                data: [12, 19, 3, 5, 2, 3],
-                backgroundColor: [
-                    "rgba(255, 99, 132, 0.2)",
-                    "rgba(54, 162, 235, 0.2)",
-                    "rgba(255, 206, 86, 0.2)",
-                    "rgba(75, 192, 192, 0.2)",
-                    "rgba(153, 102, 255, 0.2)",
-                    "rgba(255, 159, 64, 0.2)",
-                ],
-                borderColor: [
-                    "rgba(255, 99, 132, 1)",
-                    "rgba(54, 162, 235, 1)",
-                    "rgba(255, 206, 86, 1)",
-                    "rgba(75, 192, 192, 1)",
-                    "rgba(153, 102, 255, 1)",
-                    "rgba(255, 159, 64, 1)",
-                ],
-                borderWidth: 1,
-            },
-        ],
-    },
-    options: {
-        scales: {
-            y: {
-                beginAtZero: true,
-            },
-        },
-    },
-};
-let myChart = new Chart(ctx, myChart2);
+// Chart.defaults.font = {
+//   family: "'Helvetica', 'Meiryo UI'",
+//   size: 12,
+//   style: 'normal',
+//   weight: 'normal',
+//   lineHeight: 1.2
+// }
 
-// import Chart2 from "chart.js/auto"; // 別の変数名で2つ目のChartをインポート
-import { Chart2 } from 'chart.js/auto';
-const ctx2 = document.getElementById("sampleChart").getContext("2d");
-const sampleChart2 =  {
-    type: "bar",
-    data: {
-        labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
-        datasets: [
-            {
-                label: "# of Votes",
-                data: [12, 19, 3, 5, 2, 3],
-                backgroundColor: [
-                    "rgba(255, 99, 132, 0.2)",
-                    "rgba(54, 162, 235, 0.2)",
-                    "rgba(255, 206, 86, 0.2)",
-                    "rgba(75, 192, 192, 0.2)",
-                    "rgba(153, 102, 255, 0.2)",
-                    "rgba(255, 159, 64, 0.2)",
-                ],
-                borderColor: [
-                    "rgba(255, 99, 132, 1)",
-                    "rgba(54, 162, 235, 1)",
-                    "rgba(255, 206, 86, 1)",
-                    "rgba(75, 192, 192, 1)",
-                    "rgba(153, 102, 255, 1)",
-                    "rgba(255, 159, 64, 1)",
-                ],
-                borderWidth: 1,
-            },
-        ],
-    },
-    options: {
-        scales: {
-            y: {
-                beginAtZero: true,
-            },
-        },
-    },
-};
+// const ctx = document.getElementById("myChart").getContext("2d");
+// const myChart2 =  {
+//     type: "bar",
+//     data: {
+//         labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+//         datasets: [
+//             {
+//                 label: "# of Votes",
+//                 data: [12, 19, 3, 5, 2, 3],
+//                 backgroundColor: [
+//                     "rgba(255, 99, 132, 0.2)",
+//                     "rgba(54, 162, 235, 0.2)",
+//                     "rgba(255, 206, 86, 0.2)",
+//                     "rgba(75, 192, 192, 0.2)",
+//                     "rgba(153, 102, 255, 0.2)",
+//                     "rgba(255, 159, 64, 0.2)",
+//                 ],
+//                 borderColor: [
+//                     "rgba(255, 99, 132, 1)",
+//                     "rgba(54, 162, 235, 1)",
+//                     "rgba(255, 206, 86, 1)",
+//                     "rgba(75, 192, 192, 1)",
+//                     "rgba(153, 102, 255, 1)",
+//                     "rgba(255, 159, 64, 1)",
+//                 ],
+//                 borderWidth: 1,
+//             },
+//         ],
+//     },
+//     options: {
+//         scales: {
+//             y: {
+//                 beginAtZero: true,
+//             },
+//         },
+//     },
+// };
+// let myChart = new Chart(ctx, myChart2);
 
-let sampleChart = new Chart(ctx2, sampleChart2);
+// // import Chart2 from "chart.js/auto"; // 別の変数名で2つ目のChartをインポート
+// import { Chart2 } from 'chart.js/auto';
+// const ctx2 = document.getElementById("sampleChart").getContext("2d");
+// const sampleChart2 =  {
+//     type: "bar",
+//     data: {
+//         labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+//         datasets: [
+//             {
+//                 label: "# of Votes",
+//                 data: [12, 19, 3, 5, 2, 3],
+//                 backgroundColor: [
+//                     "rgba(255, 99, 132, 0.2)",
+//                     "rgba(54, 162, 235, 0.2)",
+//                     "rgba(255, 206, 86, 0.2)",
+//                     "rgba(75, 192, 192, 0.2)",
+//                     "rgba(153, 102, 255, 0.2)",
+//                     "rgba(255, 159, 64, 0.2)",
+//                 ],
+//                 borderColor: [
+//                     "rgba(255, 99, 132, 1)",
+//                     "rgba(54, 162, 235, 1)",
+//                     "rgba(255, 206, 86, 1)",
+//                     "rgba(75, 192, 192, 1)",
+//                     "rgba(153, 102, 255, 1)",
+//                     "rgba(255, 159, 64, 1)",
+//                 ],
+//                 borderWidth: 1,
+//             },
+//         ],
+//     },
+//     options: {
+//         scales: {
+//             y: {
+//                 beginAtZero: true,
+//             },
+//         },
+//     },
+// };
+
+// let sampleChart = new Chart(ctx2, sampleChart2);
 
 
 import { Chart3 } from 'chart.js/auto';
@@ -91,6 +101,18 @@ import { Chart3 } from 'chart.js/auto';
     const chartLabels = JSON.parse(chartElement.getAttribute("data-labels"));
     const chartData = JSON.parse(chartElement.getAttribute("data-data"));
     
+    function formatLabel(dateString) {
+    const date = new Date(dateString);
+    const options = {
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit'
+    };
+    return date.toLocaleDateString('ja-JP', options);
+}
+const formattedChartData = chartLabels.map(formatLabel);
+
     // 例: "2023-10-25 14:30:00" を "10月25日" のフォーマットに変換する関数
     // function formatDateToMonthDay(dateString) {
     //     const date = new Date(dateString);
@@ -107,13 +129,13 @@ import { Chart3 } from 'chart.js/auto';
 
 if (chartLabels && chartData) {
     const data = {
-        labels: chartLabels,
+        labels: formattedChartData,
         // labels: formattedChartData, // 変換後の日付データを使用
         datasets: [{
             label: '体温',
             data: chartData,
-            backgroundColor: 'rgba(75, 192, 192, 0.2)',
-            borderColor: 'rgba(75, 192, 192, 1)',
+            backgroundColor: 'rgb(255, 99, 132)',
+            borderColor: 'rgb(255, 99, 132)',
             borderWidth: 1
         }]
     };
@@ -184,8 +206,10 @@ if (benchartLabels && convertedData) {
             {
                 label: '排便量',
                 data: convertedData,
-                backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                borderColor: 'rgba(75, 192, 192, 1)',
+                backgroundColor: 'rgb(255, 99, 132)',
+                borderColor: 'rgb(255, 99, 132)',
+                // backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                // borderColor: 'rgba(75, 192, 192, 1)',
                 borderWidth: 1
             },
             
@@ -201,7 +225,7 @@ if (benchartLabels && convertedData) {
             scales: {
                 y: {
                     beginAtZero: true,
-                    max: 1.5, 
+                    max: 2.0, 
                     ticks: {
                         stepSize: 0.5, // y軸の刻み幅を設定
                         callback: function (value, index, values) {
@@ -233,7 +257,7 @@ import { Chart5 } from 'chart.js/auto';
     const benConditionChartElement = document.getElementById("benConditionChart");
     const benLabelData = JSON.parse(benConditionChartElement.getAttribute("data-ben-labels"));
     const benConditionData = JSON.parse(benConditionChartElement.getAttribute("data-ben-condition"));
-   alert(benConditionData['普通便'].length);
+//   alert(benConditionData['普通便'].length);
     
     // const benConditionData = benConditionChartElement.getAttribute("data-ben-condition");
     // const benConditionDataJSON = benConditionChartElement.getAttribute("data-ben-condition");
@@ -248,7 +272,15 @@ import { Chart5 } from 'chart.js/auto';
     // if (Array.isArray(benJSONData)) {
   // `benJSONData` が配列であることを確認
 
-
+const colors = {
+    "硬便": 'rgb(255, 99, 132)',
+    "普通便": 'rgb(255, 159, 64)',
+    "軟便": 'rgb(255, 205, 86)',
+    "泥状便": 'rgb(75, 192, 192)',
+    "水様便": 'rgb(54, 162, 235)'
+    
+    // 他の条件やデータにも色を追加
+};
    const benConditionLabels = Object.keys(benConditionData);
 // const benConditionLabels = benConditionData.map(value => {
 //   if (value === '硬便') {
@@ -268,12 +300,27 @@ import { Chart5 } from 'chart.js/auto';
 //   }
 // });
 
+const defaultColor = 'rgb(255, 99, 132)';
+
+if (benLabelData) {
+    const conditionColors = benConditionLabels.map(label => colors[label] || defaultColor);
+    // 条件がnullの場合、defaultColorが使われます
+
+// const conditionColors = benConditionLabels.map(label => colors[label]);
+
+// const defaultColor = 'rgb(201, 203, 207)';
+
+// if (benLabelData) {
+//     // benConditionDataがnullまたはselectedの場合、デフォルトの色を設定
+//     if (benConditionData == null || benConditionData === "selected") {
+//         conditionColors = benConditionLabels.map(_ => defaultColor);
+//     }
 
 
 if (benLabelData && benConditionData) {
      // {"普通便":[1,2,3,4,5],"硬便":[1,2,3,4,5],"軟便":[1,2,3,4,5]}のobjectだけを取る
     const l= Object.values(benConditionData);
-   
+//   const l_count = labels.map(label => benConditionData[label].length);
     const l_count = l.map(condition =>condition.length);
     // 二重配列をmapする　配列を一つひとつ0番目、condition＝配列
    const ConditionData = {
@@ -284,17 +331,18 @@ if (benLabelData && benConditionData) {
         {
         //   label:[ '硬便','普通便','軟便','泥状便','水様便'],
           data: l_count,  // 各データポイントの値（1として表示）
-        // data:benConditionData,
-          backgroundColor: ['rgb(255, 99, 132)',
-                            'rgb(255, 159, 64)',
-                            'rgb(255, 205, 86)',
-                            'rgb(75, 192, 192)',
-                            'rgb(54, 162, 235)',
-                            'rgb(153, 102, 255)',
-                             'rgb(201, 203, 207)'
-                           ],
+       　　backgroundColor: conditionColors,
+        //   backgroundColor: ['rgb(255, 99, 132)',
+        //                     'rgb(255, 159, 64)',
+        //                     'rgb(255, 205, 86)',
+        //                     'rgb(75, 192, 192)',
+        //                     'rgb(54, 162, 235)',
+        //                     'rgb(153, 102, 255)',
+        //                      'rgb(201, 203, 207)'
+        //                   ],
           borderColor: 'rgba(75, 192, 192, 1)',
           borderWidth: 1
+         
         }
       ]
     };
@@ -314,6 +362,7 @@ if (benLabelData && benConditionData) {
 
     var benConditionChart = new Chart(ctx5, conditionconfig);
 }
+}
 });
 import { Chart6 } from 'chart.js/auto';
     const ctx6 = document.getElementById("foodChart").getContext("2d");
@@ -324,25 +373,38 @@ import { Chart6 } from 'chart.js/auto';
     const foodStapleData = JSON.parse(foodchartElement.getAttribute("data-staple_food"));
     const foodSideDish = JSON.parse(foodchartElement.getAttribute("data-side_dish"));
 
+ function formatFoodLabel(dateString) {
+    const date = new Date(dateString);
+    const options = {
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit'
+    };
+    return date.toLocaleDateString('ja-JP', options);
+}
+const formattedFoodData = foodchartLabels.map(formatFoodLabel);
+
 if (foodchartLabels && foodStapleData  && foodSideDish) {
     const fooddata = {
         // type: 'line',
-        labels: foodchartLabels,
+        labels: formattedFoodData,
         // labels: formattedChartData, // 変換後の日付データを使用
         datasets: [{
             
             label: '主食',
             data: foodStapleData,
-            backgroundColor: 'rgba(75, 192, 192, 0.2)',
-            borderColor: 'rgba(75, 192, 192, 1)',
+            backgroundColor: 'rgb(255, 99, 132)',
+            borderColor: 'rgb(255, 99, 132)',
             borderWidth: 1
+            
         },
          {
             //  type: 'line',
             label: '副食',
             data: foodSideDish,
-            backgroundColor: 'rgba(75, 192, 192, 0.2)',
-            borderColor: 'rgba(75, 192, 192, 1)',
+            backgroundColor: 'rgb(75, 192, 192)',
+            borderColor: 'rgb(75, 192, 192)',
             borderWidth: 1
         }]
     };

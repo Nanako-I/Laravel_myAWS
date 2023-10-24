@@ -100,6 +100,9 @@
                       }
                      
                      </style>
+                     
+                     <a href="{{ url('chart/'.$person->id.'/edit') }}" class="relative  ml-2">
+                                                                 @csrf
 
                       <div class="h-30 flex flex-row items-center rounded-lg bg-white width:100vw">
                           @if ($person->filename)
@@ -122,6 +125,7 @@
                                           <p class="text-gray-900 font-bold text-xs" _msttexthash="150072">{{$person->date_of_birth}}生まれ</p>
                                         </div>
                       </div>
+                      </a>
                       
                    <!-- 食事量登録↓ -->
                    　　　    <div class="border-2 p-2 rounded-lg bg-white m-2">
@@ -684,55 +688,7 @@
                                     </div>
                                   </div>
                                   
-                                  <!-- 送迎登録↓ -->
-                                    <div class="border-2 p-2 rounded-lg bg-white m-2">
-                                        <div class="flex justify-start items-center">
-                                            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
-                                            <script src="https://kit.fontawesome.com/de653d534a.js" crossorigin="anonymous"></script>
-                                            <i class="fa-solid fa-bus text-purple-700" style="font-size: 2em; padding: 0 5px; transition: transform 0.2s;"></i>
-                                            <p class="text-purple-700 font-bold text-xl ml-2">送迎</p>
-                                        </div>
-                                    
-                                    <!-- people.blade.php -->
-                                   <div class="flex items-center justify-center p-4">
-                                        @if (!is_null($person) && is_countable($person->cars) && count($person->cars) > 0)
-                                        @php
-                                           $lastCarMorning = $person->car_mornings->last();
-                                           $lastCarEvening = $person->car_evenings->last();
-                                        @endphp
-                                            @if ($lastCarMorning->created_at->diffInHours(now()) >= 6)
-                                                <!-- 送迎フォーム -->
-                                                
-                                                    <details>
-                                                        <summary class="text-red-500 font-bold text-xl">今日の送迎</summary>
-                                                        <form action="{{ route('cars.store', $person->id) }}" method="POST">
-                                                    @csrf
-                                                        <input type="hidden" name="people_id" value="{{ $person->id }}">
-                                                        <input name="car_morning" id="text-box" class="appearance-none block w-1/4 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white font-bold" type="text" placeholder="">
-                                                        <button type="submit" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150">
-                                                            送信
-                                                        </button>
-                                                    </details>
-                                                </form>
-                                            @else
-                                                
-                                                <a href="{{ route('cars.show', $lastCarMorning->id) }}" class="font-bold text-xl">{{ $lastCarMorning->car_morning }}</a>
-                                            @endif
-                                             @else
-                                             <details>
-                                                        <summary class="text-red-500 font-bold text-xl">今日の送迎</summary>
-                                                        <form action="{{ route('cars.store', $person->id) }}" method="POST">
-                                                    @csrf
-                                                        <input type="hidden" name="people_id" value="{{ $person->id }}">
-                                                        <input name="car_morning" id="text-box" class="appearance-none block w-1/4 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white font-bold" type="text" placeholder="">
-                                                        <button type="submit" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150">
-                                                            送信
-                                                        </button>
-                                                    </details>
-                                                </form>
-                                        @endif
-                                    </div>
-                                </div>
+                                 
                                 
                                 <!-- 問題行動登録↓ -->
                                     <div class="border-2 p-2 rounded-lg bg-white m-2">

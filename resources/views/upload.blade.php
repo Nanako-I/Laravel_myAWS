@@ -21,7 +21,14 @@
     
     @foreach($files as $file)
       <div>
+        　<!--ユーザーがPDFのリンクをクリックすると、そのファイルがブラウザで表示される↓-->
+         
+          
           <a href="{{ asset('storage/' . $file) }}">{{ $file }}</a>
+<button id="readButton">文字を読み取る</button>
+
+<div id="pdfContainer"></div>
+          
           
           <form action="{{ url('/delete/' . $file) }}" method="POST" class="w-full">
           @method('DELETE') <!-- メソッドをDELETEに設定 -->
@@ -29,16 +36,19 @@
           <button type="submit" class="fa-solid fa-trash-can text-gray-600" style="padding: 0 5px; cursor: pointer;" data-file="{{ $file }}">削除</button>
           
           </form>
+          
+           <textarea id="text-box" class="w-full h-full break-words text-base"></textarea>
       </div>
     @endforeach
     
     <form id="pdfForm" enctype="multipart/form-data">
       <!--<input type="file" id="file" name="file" class="form-control">-->
-      <button type="button" id="readButton">文字を読み取る</button>
+      <!--<button type="button" id="readButton">文字を読み取る</button>-->
     </form>
 
 
-    <script>
+   <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.11.615/pdf.min.js"></script>-->
+<script>
       // ゴミ箱アイコンをクリックしたときの処理
       
      document.addEventListener('DOMContentLoaded', function () {
@@ -77,37 +87,49 @@
 });
 
 // OCRを実装↓
-    document.addEventListener('DOMContentLoaded', function () {
-    const readButton = document.getElementById('readButton');
-    const pdfForm = document.getElementById('pdfForm');
 
-    readButton.addEventListener('click', function () {
-        const fileInput = document.getElementById('file');
-        const file = fileInput.files[0];
 
-        if (file) {
-            const formData = new FormData();
-            formData.append('file', file);
+var readButtons = document.querySelectorAll('#readButton');
+readButtons.forEach(function(button) {
+    button.addEventListener('click', function() {
+        alert('アラートが表示されました！');
+            var pdfUrl = "{{ asset('storage/' . $file) }}";
+            var pdfContainer = document.getElementById('pdfContainer');
+            var text = "";
 
-            // Ajaxリクエストを作成
-            const xhr = new XMLHttpRequest();
-            xhr.open('POST', '/read-pdf', true);
-            xhr.setRequestHeader('X-CSRF-TOKEN', csrfToken); // CSRFトークンを設定
-            xhr.onreadystatechange = function () {
-                if (xhr.readyState === 4 && xhr.status === 200) {
-                    // レスポンスをコンソールに表示
-                    console.log(xhr.responseText);
-                }
-            };
+            // 1. PDFファイルを画像に変換（キャプチャ）
+            // ここでPDFファイルを画像に変換するコードを記述
 
-            // フォームデータを送信
-            xhr.send(formData);
-        } else {
-            console.error('ファイルを選択してください。');
-        }
-    });
-});
+            // 2. Cloud Vision APIを使用してテキスト認識
+            const apiKey = "{{ config('app.api_key') }}";
+            const apiUrl =  "https://vision.googleapis.com/v1/images:annotate?key=" + apiKey;
 
+            fetch(apiUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    requests: [
+                        {
+                            image: {
+                                source: {
+                                    imageUri: 'URL_TO_YOUR_PDF_IMAGE_CAPTURE'
+                                }
+                            },
+                            features: [{ type: 'TEXT_DETECTION' }]
+                        }
+                    ]
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                // 3. OCRの結果を取得し、テキストボックスに表示
+                const responseText = data.responses[0].fullTextAnnotation.text;
+                document.getElementById('text-box').value = responseText;
+            });
+        });
+ });
 
     </script>
   </body>
