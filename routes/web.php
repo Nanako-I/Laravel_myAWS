@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\Request;
 
 use App\Http\Controllers\PersonController;//追記
 use App\Http\Controllers\PhotoController;//追記
@@ -134,6 +135,16 @@ Route::delete('/delete/{fileName}', function ($fileName) {
 
 // Route::post('/read-pdf', 'UploadController@readPdf');
 Route::post('/upload', [UploadController::class, 'store'])->name('upload.edit');
+// Route::get('/convert-pdf-to-image', 'PdfToImageController@convertPdfToImage');
+// Route::get('/convert-pdf-to-image',  [UploadController::class, 'convertPdfToImage'])->name('convert.edit');
+
+// Route::get('/upload', function () {
+//     return view('upload');
+// });
+
+// Route::get('/convert-pdf', [UploadController::class, 'convert'])->name('convert.edit');
+Route::post('/convert-pdf', [UploadController::class, 'convertPDFsToPNG'])->name('convert.edit');
+
 Route::get('chart/{id}/edit', [ChartController::class, 'show'])->name('chart.edit');
 // Route::get('food/{people_id}/edit', [FoodController::class, 'edit'])->name('food.edit');
 

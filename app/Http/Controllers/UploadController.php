@@ -84,7 +84,93 @@ class UploadController extends Controller
             return response()->json(['message' => 'ファイルが削除されました']);
         }
         
-        // // OCR付け足し↓
+        
+        public function convertPdfToImage()
+        {
+            // PDFファイルをイメージに変換
+            exec('gs -sDEVICE=jpeg -o /path/to/output.jpg /path/to/input.pdf');
+        }
+        
+     public function convert(Request $request) {
+        // アップロードされたPDFファイルを取得
+        $pdfFile = $request->file('pdfFile');
+        
+        // 一意のファイル名を生成
+        $imageFileName = uniqid('image_') . '.jpg';
+        
+        // PDFを画像に変換
+        //gs -sDEVICE=pngalpha -o usagi.png usagi.pdf
+        exec("gs -sDEVICE=jpeg -o " . storage_path('storage/' . $imageFileName) . " " . $pdfFile->path());
+        
+        // 画像からテキストを抽出（OCR）
+        $imagePath = storage_path('app/public/images/' . $imageFileName);
+        $extractedText = $this->performOCR($imagePath);
+        
+        // テキストをJSON形式で返す
+        return response()->json(['text' => $extractedText]);
+        }
+
+
+    public function showUploadForm()
+    {
+        return view('upload'); // アップロードフォームを表示
+    }
+
+    public function convertPDFsToPNG(Request $request)
+    {
+        // フォームからPDFファイルを取得
+        // $pdfFile = $request->file('file');
+         $pdfFiles = Storage::files('public');
+         
+        // dd($pdfFile);
+
+        foreach ($pdfFiles as $pdfFile) {
+        // ファイルの実際のパスを取得
+        $pdfPath = storage_path("app/public/$pdfFile");
+
+        // ファイル名を変更してPNGファイルのパスを生成
+        $pngPath = str_replace('.pdf', '.png', $pdfPath);
+
+        // Ghostscriptを使用してPDFをPNGに変換
+        $command = "gs -sDEVICE=pngalpha -o $pngPath $pdfPath";
+        shell_exec($command);
+            // echo $output;
+
+            // PNGファイルをブラウザで表示
+            return response()->file(storage_path("app/public/$pngPath"));
+        }
+
+        return "PDFファイルがアップロードされていません。";
+    }
+// public function convertPDFsToPNG()
+// {
+    // PDFファイルのリストを取得
+    // $file_list = Storage::files('public');
+// $pdfFiles = array_filter($file_list, function ($file) {
+//     return pathinfo($file, PATHINFO_EXTENSION) === 'pdf';
+// });
+
+//   $pdfPath = 'app/storage/体温表.pdf';
+//   $pngPath = 'app/storage/体温表.png';
+//   $command = "gs -sDEVICE=pngalpha -o $pngPath $pdfPath";
+// shell_exec($command);
+
+    // foreach ($pdfFiles as $pdfFile) {
+    //     // PDFファイルのフルパスを取得
+    //     $pdfPath = storage_path('storage/' . $pdfFile);
+
+    //     // 対応するPNGファイルのパスを生成（pathinfo 関数は、指定されたファイルパスからファイルに関する情報を取得するために使用　PATHINFO_FILENAME 定数は、ファイル名を表す情報を取得）
+    //     $pngFile = pathinfo($pdfFile, PATHINFO_FILENAME) . '.png';
+    //     $pngPath = storage_path('storage/' . $pngFile);
+
+    //     // Ghostscriptコマンドを実行してPDFをPNGに変換
+    //     $command = "gs -sDEVICE=pngalpha -o $pngPath $pdfPath";
+    //     shell_exec($command);
+    // }
+
+//     return "PDFファイルをPNGに変換しました。";
+// }
+//         // // OCR付け足し↓
         // public function readPdf(Request $request)
         // {
         //     $uploadedFile = $request->file('file');

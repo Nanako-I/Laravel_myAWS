@@ -13,7 +13,7 @@
             <style>
               body {
                     font-family: 'Noto Sans JP', sans-serif; /* フォントをArialに設定 */
-                  background: rgb(253, 219, 146,0.2);
+                  background: rgb(255, 255, 255);
                   }
                 h2 {
                   font-family: Arial, sans-serif; /* フォントをArialに設定 */

@@ -18,16 +18,23 @@
       <button type="submit">アップロード</button>
       @csrf
     </form>
-    
+    </form>
     @foreach($files as $file)
       <div>
         　<!--ユーザーがPDFのリンクをクリックすると、そのファイルがブラウザで表示される↓-->
          
           
           <a href="{{ asset('storage/' . $file) }}">{{ $file }}</a>
-<button id="readButton">文字を読み取る</button>
+          
+          <form action="/convert-pdf" method="POST" enctype="multipart/form-data">
+          @csrf
+            <input type="file" name="pdfFile" id="pdfFile" class="form-control">
+          <button type="submit">PDFを変換</button>
+          </form>
 
-<div id="pdfContainer"></div>
+    <button id="readButton">文字を読み取る</button>
+
+    <div id="pdfContainer"></div>
           
           
           <form action="{{ url('/delete/' . $file) }}" method="POST" class="w-full">
@@ -99,6 +106,32 @@ readButtons.forEach(function(button) {
 
             // 1. PDFファイルを画像に変換（キャプチャ）
             // ここでPDFファイルを画像に変換するコードを記述
+            
+            var img = new Image();
+            //img.src = '/path/to/output.jpg';
+            img.src = '/storage/sample/output.jpg';
+         
+            
+            img.onload = function() {
+                // 画像が読み込まれた後にテキスト認識を実行
+                recognizeText(img);
+            };
+            
+            function recognizeText(image) {
+            //var apiKey = 'YOUR_CLOUD_VISION_API_KEY';
+        
+            // Cloud Vision APIリクエストのパラメータを設定
+            var requestData = {
+                requests: [
+                    {
+                        image: {
+                            content: base64encode(image) // 画像をBase64エンコード
+                        },
+                        features: [{ type: 'TEXT_DETECTION' }]
+                    }
+                ]
+            };
+
 
             // 2. Cloud Vision APIを使用してテキスト認識
             const apiKey = "{{ config('app.api_key') }}";
@@ -128,8 +161,10 @@ readButtons.forEach(function(button) {
                 const responseText = data.responses[0].fullTextAnnotation.text;
                 document.getElementById('text-box').value = responseText;
             });
-        });
- });
+        };
+ })
+  
+});
 
     </script>
   </body>
