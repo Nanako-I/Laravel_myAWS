@@ -126,12 +126,14 @@ Route::get('/download',[SpreadsheetController::class,'chart'])->name('chart');
 
 Route::resource('/upload',UploadController::class);
 
-Route::delete('/delete/{fileName}', function ($fileName) {
-    // ファイルを削除
-    Storage::delete('public/' . $fileName);
+Route::delete('/delete/{fileName}',[UploadController::class,'delete'])->name('upload.delete');
+
+// Route::delete('/delete/{fileName}', function ($fileName) {
+//     // ファイルを削除
+//     Storage::delete('storage/images/' . $fileName);
     
-    return response()->json(['message' => 'ファイルが削除されました']);
-});
+//     return response()->json(['message' => 'ファイルが削除されました']);
+// });
 
 // Route::post('/read-pdf', 'UploadController@readPdf');
 Route::post('/upload', [UploadController::class, 'store'])->name('upload.edit');
@@ -144,6 +146,7 @@ Route::post('/upload', [UploadController::class, 'store'])->name('upload.edit');
 
 // Route::get('/convert-pdf', [UploadController::class, 'convert'])->name('convert.edit');
 Route::post('/convert-pdf', [UploadController::class, 'convertPDFsToPNG'])->name('convert.edit');
+Route::post('/readPNG', [UploadController::class, 'readPNG'])->name('readPNG.edit');
 
 Route::get('chart/{id}/edit', [ChartController::class, 'show'])->name('chart.edit');
 // Route::get('food/{people_id}/edit', [FoodController::class, 'edit'])->name('food.edit');

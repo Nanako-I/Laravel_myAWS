@@ -141,16 +141,18 @@ if (chartLabels && chartData) {
     };
 
     const config = {
-        type: 'line',
-        data: data,
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
+    type: 'line',
+    data: data,
+    options: {
+        scales: {
+            y: {
+                beginAtZero: false, // 0からではなく、35から始まるように設定
+                suggestedMin: 30,   // 最小値を35に設定
+                suggestedMax: 40    // 最大値を50に設定
             }
         }
-    };
+    }
+};
 
 
 var temperatureChart = new Chart(ctx3, config);

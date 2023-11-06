@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Storage;
 
 // OCR付け足し↓
 use Google\Cloud\Vision\V1\ImageAnnotatorClient;
-use Google\Cloud\Vision\VisionClient;
+// use Google\Cloud\Vision\VisionClient;
 
 
 class UploadController extends Controller
@@ -17,22 +17,26 @@ class UploadController extends Controller
          
         
          // スキャンするディレクトリのパスを指定↓-->
-    $directory = storage_path('app/public');
+    // $directory = storage_path('app/public');  ///cms/storage/app/public
+    $directory = storage_path('app/public/images'); ///cms/storage/app/public/images
+    // $directory = storage_path('images');
+    // dd($directory);
     
      // ディレクトリ内のファイル一覧を取得　. と .. を除外↓↓-->
      $files = array_diff(scandir($directory), ['.', '..']);
-   
+//   dd($files);
     
     //   upload.blade.phpを表示させる↓
     	return view('upload', compact('files'));
     }
     public function store(Request $request){
         
-        $request->validate([
-            'file' => 'required|file'
-
+        // NULL許容後にコメントアウトした↓
+//         $request->validate([
+//             'file' => 'required|file'
+//  ]);
         // 'file' => 'required|file|mimes:pdf', // ここでバリデーションルールを設定（PDFファイルしか許容しない場合）
-    ]);
+   
     
     if ($request->hasFile('file')) {
         $uploadedFile = $request->file('file');
@@ -40,12 +44,14 @@ class UploadController extends Controller
         // $file_name = $request->file('file')->getClientOriginalName();
         // $request->file('file')->storeAs('public', $file_name);
         $file_name = $uploadedFile->getClientOriginalName();
-        $uploadedFile->storeAs('public', $file_name);
-
+        // $uploadedFile->storeAs('public', $file_name);
+        // $uploadedFile->storeAs($directory, $file_name);
+        $uploadedFile->storeAs('public/images', $file_name);
         // ファイル情報をデータベースに保存
         $upload = new Upload();
         $upload->file_name = $file_name;
-        $upload->file_path = 'storage/' . $file_name; // ファイルの保存パスに注意
+        // $upload->file_path = 'storage/' . $file_name; // ファイルの保存パスに注意
+        $upload->file_path = 'public/images' . $file_name;
         $upload->save();
 
 
@@ -75,12 +81,13 @@ class UploadController extends Controller
         // return view('upload');
     
     
-        public function deleteFile($file_name)
+        public function delete($file_name)
         {
-            Uploads::where('file_name', $file_name)->delete();
+            // Uploads::where('file_name', $file_name)->delete();
+            Upload::where('file_name', $file_name)->delete();
             // ファイルを削除
-            Storage::delete('public/' . $file_name);
-        
+            // Storage::delete('public/' . $file_name);
+            Storage::delete('public/images/' . $file_name);
             return response()->json(['message' => 'ファイルが削除されました']);
         }
         
@@ -120,68 +127,218 @@ class UploadController extends Controller
     {
         // フォームからPDFファイルを取得
         // $pdfFile = $request->file('file');
-         $pdfFiles = Storage::files('public');
-         
-        // dd($pdfFile);
+         $pdfFiles = Storage::files('public/images');
+         $pngPaths = [];
+    
 
         foreach ($pdfFiles as $pdfFile) {
         // ファイルの実際のパスを取得
-        $pdfPath = storage_path("app/public/$pdfFile");
+        $pdfPath = storage_path("app/$pdfFile");
+        
+        
+        
+        // dd($pdfPath);
 
         // ファイル名を変更してPNGファイルのパスを生成
         $pngPath = str_replace('.pdf', '.png', $pdfPath);
-
+ //dd($pngPath);
         // Ghostscriptを使用してPDFをPNGに変換
         $command = "gs -sDEVICE=pngalpha -o $pngPath $pdfPath";
         shell_exec($command);
-            // echo $output;
+           
+        // PNGファイルのパスを配列に追加
+        $pngPaths[] = $pngPath;
+        dd($pngPath);
+        }
+        //  return redirect('upload');
+        if (count($pngPaths) > 0) {
+    //     // 最初に変換したPNGファイルをブラウザで表示
+        return response()->file($pngPaths[0]);
+    }
 
             // PNGファイルをブラウザで表示
-            return response()->file(storage_path("app/public/$pngPath"));
-        }
+            
+            //return response()->file($pngPath);
+        
 
         return "PDFファイルがアップロードされていません。";
     }
-// public function convertPDFsToPNG()
-// {
-    // PDFファイルのリストを取得
-    // $file_list = Storage::files('public');
-// $pdfFiles = array_filter($file_list, function ($file) {
-//     return pathinfo($file, PATHINFO_EXTENSION) === 'pdf';
-// });
 
-//   $pdfPath = 'app/storage/体温表.pdf';
-//   $pngPath = 'app/storage/体温表.png';
-//   $command = "gs -sDEVICE=pngalpha -o $pngPath $pdfPath";
-// shell_exec($command);
-
-    // foreach ($pdfFiles as $pdfFile) {
-    //     // PDFファイルのフルパスを取得
-    //     $pdfPath = storage_path('storage/' . $pdfFile);
-
-    //     // 対応するPNGファイルのパスを生成（pathinfo 関数は、指定されたファイルパスからファイルに関する情報を取得するために使用　PATHINFO_FILENAME 定数は、ファイル名を表す情報を取得）
-    //     $pngFile = pathinfo($pdfFile, PATHINFO_FILENAME) . '.png';
-    //     $pngPath = storage_path('storage/' . $pngFile);
-
-    //     // Ghostscriptコマンドを実行してPDFをPNGに変換
-    //     $command = "gs -sDEVICE=pngalpha -o $pngPath $pdfPath";
-    //     shell_exec($command);
-    // }
-
-//     return "PDFファイルをPNGに変換しました。";
-// }
 //         // // OCR付け足し↓
-        // public function readPdf(Request $request)
-        // {
+        public function readPNG(Request $request)
+        {
+            // 指定ディレクトリ内のすべてのファイルを取得
+$files = Storage::files('public/images');
+       $textResults = [];
+       
+//       $vision_path = config('vision_cloud_api.fruits');
+// //       dd($vision_path);
+//   putenv("GOOGLE_APPLICATION_CREDENTIALS=/storage/json/vision_api_key.json");
+// $imageAnnotator = new ImageAnnotatorClient();
+// dd($imageAnnotator);
+// $url = 'https://vision.googleapis.com/v1/images:annotate?key=AIzaSyBtE_NInCBqcXT-DqWpQxTcVTY6T6IcEsY';
+// $method = "GET";
+
+        //接続
+        // $client = new ImageAnnotatorClient();
+
+        // $response = $client->request($method, $url);
+
+   
+    
+    // vision_cloud_apiファイルのAPIキーを読み込む
+    //   $apiKey = config('vision_cloud_api.api_key');
+    //   putenv("GOOGLE_APPLICATION_CREDENTIALS={$apiKey}");
+    //   dd($apiKey);
+    //   $imageAnnotator = new ImageAnnotatorClient();
+
+    // $imageAnnotator = new ImageAnnotatorClient([
+    //     'key' => "{{ config('app.api_key') }}"
+    //     'key' => env('APP_API_KEY'),
+    // ]);
+    // PNGファイルのみを取り出すためのフィルタリング
+    $pngFiles = [];
+    foreach ($files as $file) {
+        // ファイルの拡張子を取得
+        $extension = pathinfo($file, PATHINFO_EXTENSION);
+
+        // 拡張子が 'png' の場合のみ処理する
+        if ($extension === 'png') {
+            
+            $pngFiles[] = $file;
+            // dd($pngFiles);
+            // $send_image = $request->file('image');
+            // dd($send_image);
+            
+            
+            foreach ($files as $file) {
+        // ファイルの拡張子を取得
+        $extension = pathinfo($file, PATHINFO_EXTENSION);
+
+        // 拡張子が 'png' の場合のみ処理する
+        if ($extension === 'png') {
+            $pngPath = storage_path('app/' . $file);
+            // dd($pngPath);
+            
+            // Vision APIにリクエストを送信
+            $requestData = [
+                'requests' => [
+                    [
+                        'image' => [
+                            'content' => base64_encode(file_get_contents($pngPath)),
+                        ],
+                        'features' => [
+                            [
+                                'type' => 'TEXT_DETECTION',
+                            ],
+                        ],
+                    ],
+                ],
+            ];
+            //  dd($requestData);
+            //  Upload::create([
+            //     'base64_data' => json_encode($requestData), // base64_data カラムにデータを格納
+            // ]);
+            
+    //         return view('/upload', [
+    //     'requestData' => $requestData,
+    // ]);
+            //   $PNGData = json_decode($request->input('requestData'), true);
+            //   dd($PNGData);
+// dd($requestData);
+// http_build_query($requestData);
+            // $response = file_get_contents("https://vision.googleapis.com/v1/images:annotate?key=" . $apiKey, false, stream_context_create([
+                $response = file_get_contents("https://vision.googleapis.com/v1/images:annotate?key=AIzaSyBtE_NInCBqcXT-DqWpQxTcVTY6T6IcEsY", false, stream_context_create([
+                'http' => [
+                    'method' => 'POST',
+                    'header' => 'Content-Type: application/json',
+                    'content' => '',//json_encode($requestData),
+                ],
+            ]));
+            dd($response);
+//             $ch = curl_init();
+
+            // Vision APIのエンドポイントURLとAPIキー
+            // $url = "https://vision.googleapis.com/v1/images:annotate?key={$apiKey}";
+            
+//             curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+            
+//             curl_setopt($ch, CURLOPT_URL,'https://vision.googleapis.com/v1/images:annotate?key=AIzaSyBtE_NInCBqcXT-DqWpQxTcVTY6T6IcEsY');
+//             curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($requestData));
+//             curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
+//             curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);                  // 証明書の検証を無効化
+// curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, FALSE);                  // 証明書の検証を無効化
+// curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);                   // 返り値を文字列に変更
+// curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE); 
+
+            // dd($url);
+            // cURLオプションを設定
+            // curl_setopt($ch, CURLOPT_URL, $url);
+            // curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+            // curl_setopt($ch, CURLOPT_POST, 1);
+
+            
+            // リクエストを実行し、レスポンスを取得
+//             $response = curl_exec($ch);
+//             dd($response);
+//             // cURLセッションをクローズ
+            
+//             if (curl_errno($ch)) {
+//     // エラーが発生した場合の処理
+// } else {
+//     // レスポンスデータを処理
+//     $data = json_decode($response, true);
+
+//     if (isset($data['responses'][0]['fullTextAnnotation']['text'])) {
+//         $text = $data['responses'][0]['fullTextAnnotation']['text'];
+//         $textResults[] = $text;
+//     }
+
+//     // cURLセッションをクローズ
+//     curl_close($ch);
+// }
+
+//             curl_close($ch);
+            
+//             // レスポンスを処理
+//             if ($response === false) {
+//                 // エラーハンドリング
+//             } else {
+//                 // レスポンスを処理
+//             }
+
+//             $data = json_decode($response, true);
+//             dd($data);
+
+//             if (isset($data['responses'][0]['fullTextAnnotation']['text'])) {
+//                 $text = $data['responses'][0]['fullTextAnnotation']['text'];
+//                 $textResults[] = $text;
+//             }
+//         }
+//     }
+
+//     return response()->json(['textResults' => $textResults]);
+}
+        //     $client = new ImageAnnotatorClient();
+       
+        // $annotations = $imageAnnotator->text();
+
+        // 文字認識結果を取得
+        // foreach ($annotations as $annotation) {
+        //     $textResults[] = $annotation->getDescription();
+        // }
+            
+    //     }
+    // }
+    //     }
         //     $uploadedFile = $request->file('file');
         //     $pdfContent = file_get_contents($uploadedFile->getRealPath());
-        
         //     // Google Cloud Vision APIのクライアントを初期化
-        //     $imageAnnotator = new ImageAnnotatorClient();
+     
         
         //     try {
         //         // PDFファイルのテキストを抽出
-        //         $image = $imageAnnotator->image($pdfContent, ['PDF_TEXT_DETECTION']);
+                // $image = $imageAnnotator->image($pngPath, ['PDF_TEXT_DETECTION']);
         //         $annotation = $imageAnnotator->textDetection($image);
         //         $text = $annotation->text();
         
@@ -223,4 +380,4 @@ class UploadController extends Controller
 // echo json_encode($result->text());
 
 // }
-}
+}}}}}
